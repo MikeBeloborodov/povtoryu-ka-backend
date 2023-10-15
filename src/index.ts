@@ -3,6 +3,7 @@ import parser from "body-parser";
 import cors from "cors";
 import bodyParserErrorHandler from "express-body-parser-error-handler";
 import { getWordsHandler } from "./handlers/getWordsHandler";
+import { testDBHandler } from "./handlers/testDBHandler";
 import { sequelize } from "./db/db";
 require("dotenv").config();
 
@@ -26,6 +27,8 @@ app.use(bodyParserErrorHandler());
 
 // get an array of words from user, process them and save to DB
 app.post("/api/v1/words", getWordsHandler);
+
+app.get("/api/v1/test", testDBHandler);
 
 app.listen(port, () => {
   console.log("Server is running on http://localhost:8080");
