@@ -3,7 +3,19 @@ import parser from "body-parser";
 import cors from "cors";
 import bodyParserErrorHandler from "express-body-parser-error-handler";
 import { getWordsHandler } from "./handlers/getWordsHandler";
+import { sequelize } from "./db/db";
 require("dotenv").config();
+
+// db connection
+try {
+  (async () => {
+    await sequelize.authenticate();
+    console.log("Connected to DB.");
+  })();
+} catch (error) {
+  console.log("Unable to connect to DB.");
+  console.log(error);
+}
 
 const app = express();
 const port = 8080;

@@ -87,7 +87,7 @@ const getDefinitionSentencesAudio = async (
     }
   }
 
-  let audio: string = data[0].hwi.prs[0].sound.audio;
+  let audio: string = filteredEntries[0].hwi.prs[0].sound.audio;
   const audioTemplate = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${audio[0]}/${audio}.mp3`;
 
   let sentences: string[] = [];
@@ -145,5 +145,6 @@ export const createCardObjects = async (checkedWords: Word[]) => {
   } catch (error) {
     errors.push(error);
   }
+
   return [readyCards, errors, validationErrors];
 };

@@ -1,0 +1,4 @@
+check! - fix bug with pronounciation, right now we take sound file name from the first vocab entry, but we have to take it from the entry that we're taking sentences and definitions from
+
+- Phrasal verbs: come up with, look at/for...
+
