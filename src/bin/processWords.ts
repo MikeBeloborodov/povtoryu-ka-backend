@@ -1,15 +1,11 @@
-import express from "express";
 import { ValidationError, validate } from "class-validator";
 import {
-  WordData,
   WordsData,
-  VocabData,
-  CardData,
-  YandexAPIDef,
   YandexAPIBody,
-  YandexAPITranslation,
+  UnsplashAPIBody,
+  EnglishDictAPIEntry,
 } from "../interfaces/interfaces";
-import { Card, Word } from "../classes/classes";
+import { Card, ImageObject, Word } from "../classes/classes";
 import { sleep } from "./utils";
 
 require("dotenv").config();
@@ -51,6 +47,66 @@ const getTranslations = async (word: string, partOfSpeech: string) => {
   return translations;
 };
 
+const getImages = async (word: string) => {
+  const apiURL = `https://api.unsplash.com/search/photos/?client_id=${process.env.UNSPLASH_ACCESS_KEY}&query=${word}`;
+  const images: ImageObject[] = [];
+  const res = await fetch(apiURL);
+  const data: UnsplashAPIBody = await res.json();
+  for (let i = 0; i < 10 && i < data.results.length; i++) {
+    const originalImg = data.results[i].urls.regular;
+    const thumbImg = data.results[i].urls.small;
+    images.push({ original: originalImg, thumb: thumbImg });
+  }
+  return images;
+};
+
+const getDefinitionSentencesAudio = async (
+  word: string,
+  partOfSpeech: string,
+) => {
+  const apiURL = `https://www.dictionaryapi.com/api/v3/references/learners/json/${word}?key=${process.env.VOCAB_API_KEY}`;
+  const res = await fetch(apiURL);
+  const data: EnglishDictAPIEntry[] = await res.json();
+
+  // filter entries by part of speech
+  const filteredEntries = data.filter((entry) => {
+    if (entry.fl == partOfSpeech) return true;
+    return false;
+  });
+
+  let definition: string;
+  for (let item of filteredEntries[0].def[0].sseq[0]) {
+    if (item[0] === "sense") {
+      for (let def of item[1].dt) {
+        if (def[0] === "text") {
+          definition = def[1].replace(/{[^}]*}/g, "");
+          break;
+        }
+      }
+      break;
+    }
+  }
+
+  let audio: string = data[0].hwi.prs[0].sound.audio;
+  const audioTemplate = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${audio[0]}/${audio}.mp3`;
+
+  let sentences: string[] = [];
+  for (let item of filteredEntries[0].def[0].sseq[0]) {
+    if (item[0] === "sense") {
+      for (let def of item[1].dt) {
+        if (def[0] === "vis") {
+          for (let sentence of def[1]) {
+            sentences.push(sentence.t.replace(/{[^}]*}/g, ""));
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  return [definition, sentences, audioTemplate];
+};
+
 export const createCardObjects = async (checkedWords: Word[]) => {
   const readyCards: Card[] = [];
   const errors: string[] = [];
@@ -67,10 +123,18 @@ export const createCardObjects = async (checkedWords: Word[]) => {
       card.partOfSpeechRu = item.partOfSpeechRu;
       card.newCard = true;
       card.translation = await getTranslations(item.word, item.partOfSpeech);
+      card.images = await getImages(item.word);
+      const [definition, sentences, audio] = await getDefinitionSentencesAudio(
+        item.word,
+        item.partOfSpeech,
+      );
+      card.definition = definition as string;
+      card.sentences = sentences as string[];
+      card.audio = audio as string;
 
       readyCards.push(card);
       // sleep between api calls
-      const wait = await sleep(3500);
+      await sleep(500);
     }
     for (let card of readyCards) {
       const validationError = await validate(card);
@@ -82,95 +146,4 @@ export const createCardObjects = async (checkedWords: Word[]) => {
     errors.push(error);
   }
   return [readyCards, errors, validationErrors];
-};
-
-const getVocabData = async (word: string) => {
-  const res = await fetch(
-    `https://www.dictionaryapi.com/api/v3/references/learners/json/${word}?key=${process.env.VOCAB_API_KEY}`,
-  );
-  const data = await res.json();
-  return data;
-};
-
-const isBodyValid = (req: express.Request, res: express.Response) => {
-  // check for empty body
-  if (Object.keys(req.body).length === 0) {
-    return res.send("No data provided.");
-  }
-
-  // check if not array
-  if (!Array.isArray(req.body)) {
-    return res.send("Provide data in an array of objects using JSON notation.");
-  }
-
-  // check for schema
-  for (let i = 0; i < req.body.length; i++) {
-    if (!req.body[i].word || !req.body[i].part_of_speech) {
-      return res.send(
-        `Wrong data for word ${req.body[i].word} | part of speech ${req.body[i].part_of_speech}`,
-      );
-    }
-  }
-  return true;
-};
-
-const getDefinition = (vocabData: VocabData) => {
-  return vocabData.meta["app-shortdef"].def;
-};
-
-const getSentenceExamples = (vocabData: VocabData) => {
-  let array_of_examples: any = [];
-  let result: any = [];
-  vocabData.def[0].sseq[0][0][1].dt.forEach((item: any) => {
-    if (item[0] === "vis") {
-      array_of_examples.push(item[1]);
-    }
-  });
-  let counter = 0;
-  array_of_examples.forEach((arr: any) => {
-    arr.forEach((item: any) => {
-      if (counter < 6) {
-        result.push(item.t);
-      }
-      counter += 1;
-    });
-  });
-  return result;
-};
-
-const processWords = (words: WordData[], res: express.Response) => {
-  const readyCards: CardData[] = [];
-  let flag = false;
-  let error = "";
-
-  words.every(async (wordData) => {
-    // get data from APIs
-    const vocabData = await getVocabData(wordData.word);
-    if (!vocabData[0].meta) {
-      flag = true;
-      error = `Could not get vocabData for ${wordData.word}`;
-      return false;
-    } else {
-      const definition = getDefinition(vocabData[0]);
-      const examples = getSentenceExamples(vocabData[0]);
-      console.log(examples);
-    }
-    if (flag) {
-      return error;
-    }
-
-    // create card
-    /*
-    const card: CardData = {
-      word: wordData.word,
-      teacher_id: 1,
-      student_id: 1,
-      part_of_speech: wordData.part_of_speech,
-      part_of_speech_ru: wordData.part_of_speech_ru,
-      definition: getDefinition(vocabData),
-    };
-    * */
-  });
-
-  return readyCards;
 };

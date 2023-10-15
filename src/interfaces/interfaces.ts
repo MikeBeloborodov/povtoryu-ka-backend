@@ -11,6 +11,24 @@ export interface YandexAPITranslation {
   text: string;
 }
 
+export interface UnsplashAPIBody {
+  results: UnsplashAPIResult[];
+}
+
+export interface UnsplashAPIResult {
+  description: string;
+  alt_description: string;
+  urls: UnsplashAPIURLs;
+}
+
+export interface UnsplashAPIURLs {
+  raw: string;
+  full: string;
+  regular: string;
+  small: string;
+  thumb: string;
+}
+
 export interface WordsData {
   words: WordData[];
 }
@@ -45,25 +63,35 @@ export interface ImageObject {
   original: string;
 }
 
-export interface VocabData {
-  meta: VocabMetaData;
-  def: VocabDefData[];
+export interface EnglishDictAPIEntry {
+  meta: EnglishDictAPIMeta;
+  fl: string;
+  shortdef: string[];
+  def: EnglishDictAPIDef[];
+  hwi: EnglishDictAPIHwi;
 }
 
-export interface VocabMetaData {
-  "app-shortdef": VocabShortDef;
+export interface EnglishDictAPIHwi {
+  prs: EnglishDictAPIPrs[];
 }
 
-export interface VocabShortDef {
-  hw: string;
+export interface EnglishDictAPIPrs {
+  sound: EnglishDictAPISound;
+}
+
+export interface EnglishDictAPISound {
+  audio: string;
+}
+
+export interface EnglishDictAPIMeta {
+  "app-shortdef": EnglishDictAPIShortdef;
+}
+
+export interface EnglishDictAPIShortdef {
   fl: string;
   def: string[];
 }
 
-export interface VocabDefData {
+export interface EnglishDictAPIDef {
   sseq: any[];
-}
-
-export interface VocabSentence {
-  t: string;
 }

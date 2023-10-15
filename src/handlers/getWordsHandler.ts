@@ -18,15 +18,18 @@ export const getWordsHandler = async (
     );
     // exit if any errors
     if (errors.length > 0) {
+      console.log(errors);
       return res.status(400).send(errors);
     }
     if (validationErrors.length > 0) {
+      console.log(validationErrors);
       return res.status(400).send(validationErrors);
     }
 
     // if all good
     return res.send(readyCards);
   } catch (error) {
+    console.log(error);
     return res.status(500).send(error);
   }
 };

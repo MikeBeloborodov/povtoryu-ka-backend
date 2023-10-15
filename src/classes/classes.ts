@@ -71,6 +71,9 @@ export class Card {
   @IsNotEmpty()
   @IsInt()
   studentId: number;
+
+  @IsNotEmpty()
+  audio: string;
 }
 
 export class ImageObject {
