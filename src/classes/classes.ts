@@ -1,5 +1,36 @@
 import { IsNotEmpty, IsInt } from "class-validator";
 
+export class Teacher {
+  id: number;
+
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
+  password: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export class User {
+  id: number;
+
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
+  password: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  @IsNotEmpty()
+  teacherId: number;
+}
+
 export class Words {
   words: Words[];
 }

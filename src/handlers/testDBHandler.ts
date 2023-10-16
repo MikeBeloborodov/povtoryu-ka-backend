@@ -1,5 +1,4 @@
-import { sequelize as seq } from "../db/db";
-import { User } from "../db/apiModels/User";
+import { User } from "../db/ormModels/User";
 export const testDBHandler = async () => {
   const testUser = User.build({
     userName: "misha",

@@ -29,6 +29,16 @@ export interface UnsplashAPIURLs {
   thumb: string;
 }
 
+export interface TeacherData {
+  userName: string;
+  password: string;
+}
+
+export interface UserData {
+  userName: string;
+  password: string;
+}
+
 export interface WordsData {
   words: WordData[];
 }
