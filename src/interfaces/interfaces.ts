@@ -29,14 +29,21 @@ export interface UnsplashAPIURLs {
   thumb: string;
 }
 
-export interface TeacherData {
+export interface TeacherRegistrationData {
+  userName: string;
+  password: string;
+  specialCode: string;
+}
+
+export interface TeacherLoginData {
   userName: string;
   password: string;
 }
 
-export interface UserData {
+export interface UserRegistrationData {
   userName: string;
   password: string;
+  specialCode: string;
 }
 
 export interface WordsData {
@@ -104,4 +111,15 @@ export interface EnglishDictAPIShortdef {
 
 export interface EnglishDictAPIDef {
   sseq: any[];
+}
+
+export interface Token {
+  token: string;
+  userName: string;
+}
+
+export interface NewUserTokenData {
+  token: string;
+  teacherName: string;
+  studentName: string;
 }

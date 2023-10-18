@@ -12,6 +12,19 @@ export class Teacher {
   createdAt: Date;
 
   updatedAt: Date;
+
+  @IsNotEmpty()
+  specialCode: string;
+
+  token: string;
+}
+
+export class TeacherLoginInformation {
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
+  password: string;
 }
 
 export class User {
@@ -27,8 +40,10 @@ export class User {
 
   updatedAt: Date;
 
-  @IsNotEmpty()
   teacherId: number;
+
+  @IsNotEmpty()
+  specialCode: string;
 }
 
 export class Words {
@@ -113,4 +128,23 @@ export class ImageObject {
 
   @IsNotEmpty()
   original: string;
+}
+
+export class Token {
+  @IsNotEmpty()
+  token: string;
+
+  @IsNotEmpty()
+  userName: string;
+}
+
+export class NewStudentToken {
+  @IsNotEmpty()
+  token: string;
+
+  @IsNotEmpty()
+  studentName: string;
+
+  @IsNotEmpty()
+  teacherName: string;
 }

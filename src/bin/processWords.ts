@@ -4,7 +4,6 @@ import {
   YandexAPIBody,
   UnsplashAPIBody,
   EnglishDictAPIEntry,
-  UserData,
 } from "../interfaces/interfaces";
 import { Card, ImageObject, Word } from "../classes/classes";
 import { sleep } from "./utils";

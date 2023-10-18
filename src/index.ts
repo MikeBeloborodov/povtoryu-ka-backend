@@ -3,9 +3,13 @@ import parser from "body-parser";
 import cors from "cors";
 import bodyParserErrorHandler from "express-body-parser-error-handler";
 import { getWordsHandler } from "./handlers/getWordsHandler";
-import { testDBHandler } from "./handlers/testDBHandler";
 import { createTeacherHandler } from "./handlers/createTeacherHandler";
 import { sequelize } from "./db/db";
+import { createUserHandler } from "./handlers/createUserHandler";
+import { loginTeacherHandler } from "./handlers/loginTeacherHandler";
+import { checkTeacherTokenHandler } from "./handlers/checkTeacherTokenHandler";
+import { createNewUserTokenHandler } from "./handlers/createNewUserTokenHandler";
+
 require("dotenv").config();
 
 // db connection
@@ -29,9 +33,17 @@ app.use(bodyParserErrorHandler());
 // get an array of words from user, process them and save to DB
 app.post("/api/v1/words", getWordsHandler);
 
-app.get("/api/v1/test", testDBHandler);
-
+// teachers endpoints
 app.post("/api/v1/teacher", createTeacherHandler);
+
+app.post("/api/v1/teacher/login", loginTeacherHandler);
+
+app.post("/api/v1/teacher/token", checkTeacherTokenHandler);
+
+// users enpoints
+app.post("/api/v1/user", createUserHandler);
+
+app.post("/api/v1/user/token/new", createNewUserTokenHandler);
 
 app.listen(port, () => {
   console.log("Server is running on http://localhost:8080");

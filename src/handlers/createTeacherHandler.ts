@@ -21,7 +21,7 @@ export const createTeacherHandler = async (
       .send({ error: "Wrong data provided.", error_message: teacherErrors });
   }
   try {
-    // save user to DB
+    // save a teacher to DB
     teacher = await saveTeacher(teacher);
   } catch (error) {
     return res
