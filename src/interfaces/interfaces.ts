@@ -46,6 +46,11 @@ export interface UserRegistrationData {
   specialCode: string;
 }
 
+export interface UserLoginData {
+  userName: string;
+  password: string;
+}
+
 export interface WordsData {
   words: WordData[];
 }

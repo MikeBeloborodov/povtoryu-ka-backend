@@ -10,6 +10,7 @@ export const saveUser = async (data: UserClass): Promise<UserClass> => {
     userName: data.userName,
     password: data.password,
     teacherId: code.teacherId,
+    nickname: code.nickname,
   });
   const res: any = await user.save();
   const answer = new UserClass();
@@ -18,5 +19,6 @@ export const saveUser = async (data: UserClass): Promise<UserClass> => {
   answer.createdAt = res.createdAt;
   answer.userName = res.userName;
   answer.teacherId = res.teacherId;
+  answer.nickname = res.nickname;
   return answer;
 };

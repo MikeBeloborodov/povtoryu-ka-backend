@@ -28,7 +28,11 @@ export const createNewUserTokenHandler = async (
   }
   // check teacher token validity
   try {
-    const res = await checkToken(studentToken.token, studentToken.teacherName);
+    const res = await checkToken(
+      studentToken.token,
+      studentToken.teacherName,
+      "teacher",
+    );
     if (!res)
       throw { error_message: "Provided teacher token or username is invalid." };
   } catch (validity_errors) {

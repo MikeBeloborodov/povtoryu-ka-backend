@@ -16,6 +16,7 @@ export const createUserHandler = async (
     if (userErrorsRes.length > 0) throw userErrors;
     user = userRes;
   } catch (error) {
+    console.log(error);
     return res
       .status(400)
       .send({ error: "Wrong data provided.", error_message: userErrors });
@@ -24,6 +25,7 @@ export const createUserHandler = async (
     // save a user to DB
     user = await saveUser(user);
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .send({ error: "Could not save data to db.", error_message: error });

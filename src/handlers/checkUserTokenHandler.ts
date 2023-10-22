@@ -2,7 +2,7 @@ import express from "express";
 import { createTokenObject } from "../bin/createTokenObject";
 import { checkToken } from "../db/bin/checkToken";
 
-export const checkTeacherTokenHandler = async (
+export const checkUserTokenHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
@@ -23,11 +23,11 @@ export const checkTeacherTokenHandler = async (
   }
   // check token in db
   try {
-    const db_res = await checkToken(token.token, token.userName, "teacher");
+    const db_res = await checkToken(token.token, token.userName, "user");
     if (db_res) {
       return res.status(200).send(db_res);
     } else {
-      throw { error: "Wrong credentials, no such token or teacher." };
+      throw { error: "Wrong credentials, no such token or user." };
     }
   } catch (db_error) {
     return res

@@ -27,6 +27,14 @@ export class TeacherLoginInformation {
   password: string;
 }
 
+export class UserLoginInformation {
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
+  password: string;
+}
+
 export class User {
   id: number;
 
@@ -35,6 +43,8 @@ export class User {
 
   @IsNotEmpty()
   password: string;
+
+  nickname: string;
 
   createdAt: Date;
 

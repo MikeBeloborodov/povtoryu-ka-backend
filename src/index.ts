@@ -9,6 +9,8 @@ import { createUserHandler } from "./handlers/createUserHandler";
 import { loginTeacherHandler } from "./handlers/loginTeacherHandler";
 import { checkTeacherTokenHandler } from "./handlers/checkTeacherTokenHandler";
 import { createNewUserTokenHandler } from "./handlers/createNewUserTokenHandler";
+import { loginUserHandler } from "./handlers/loginUserHandler";
+import { checkUserTokenHandler } from "./handlers/checkUserTokenHandler";
 
 require("dotenv").config();
 
@@ -43,7 +45,11 @@ app.post("/api/v1/teacher/token", checkTeacherTokenHandler);
 // users enpoints
 app.post("/api/v1/user", createUserHandler);
 
+app.post("/api/v1/user/login", loginUserHandler);
+
 app.post("/api/v1/user/token/new", createNewUserTokenHandler);
+
+app.post("/api/v1/user/token", checkUserTokenHandler);
 
 app.listen(port, () => {
   console.log("Server is running on http://localhost:8080");
