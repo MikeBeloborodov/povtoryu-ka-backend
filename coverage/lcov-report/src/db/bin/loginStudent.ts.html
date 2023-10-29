@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">41.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>5/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">27.27% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/11</span>
+                <span class='fraction'>4/10</span>
             </div>
         
             
@@ -80,42 +80,39 @@
 <a name='L15'></a><a href='#L15'>15</a>
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
-<a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L18'></a><a href='#L18'>18</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Student } from "../ormModels/Student";
-import { StudentLoginRequestBody } from "../../interfaces/Student";
-import { createToken } from "./createToken";
-import express from "express";
+import { StudentLoginInfo } from "../../classes/Student";
+import { createJWToken } from "./createJWToken";
+import bcrypt from "bcrypt";
 &nbsp;
-export const loginStudent = <span class="fstat-no" title="function not covered" >async (r</span>eq: express.Request) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-  const studentData: StudentLoginRequestBody = <span class="cstat-no" title="statement not covered" >req.body;</span>
-  const student = <span class="cstat-no" title="statement not covered" >await Student.findOne({</span>
-    where: { userName: studentData.userName, password: studentData.password },
+export const loginStudent = <span class="fstat-no" title="function not covered" >async (s</span>tudentData: StudentLoginInfo) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+  const student: any = <span class="cstat-no" title="statement not covered" >await Student.scope("withPassword").findOne({</span>
+    where: { userName: studentData.userName },
   });
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (student) {</span>
-    const token = <span class="cstat-no" title="statement not covered" >createToken();</span>
-<span class="cstat-no" title="statement not covered" >    student.update({ token: token });</span>
-    const res = <span class="cstat-no" title="statement not covered" >await student.save();</span>
-<span class="cstat-no" title="statement not covered" >    return res;</span>
+  const isMatch = <span class="cstat-no" title="statement not covered" >bcrypt.compareSync(studentData.password, student.password);</span>
+<span class="cstat-no" title="statement not covered" >  if (isMatch) {</span>
+    const token = <span class="cstat-no" title="statement not covered" >createJWToken(student.id, student.userName);</span>
+<span class="cstat-no" title="statement not covered" >    return token;</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    return null;</span>
   }
-<span class="cstat-no" title="statement not covered" >  return student;</span>
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -124,7 +121,7 @@ export const loginStudent = <span class="fstat-no" title="function not covered" 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-28T22:58:38.132Z
+                at 2023-10-29T16:54:30.760Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

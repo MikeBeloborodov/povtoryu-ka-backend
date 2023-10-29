@@ -1,29 +1,17 @@
 import { Student } from "../ormModels/Student";
-import { StudentLoginRequestBody } from "../../interfaces/Student";
-import { createToken } from "./createToken";
-import express from "express";
+import { StudentLoginInfo } from "../../classes/Student";
+import { createJWToken } from "./createJWToken";
 import bcrypt from "bcrypt";
 
-export const loginStudent = async (
-  req: express.Request,
-  res: express.Response,
-) => {
-  const studentData: StudentLoginRequestBody = req.body;
+export const loginStudent = async (studentData: StudentLoginInfo) => {
   const student: any = await Student.scope("withPassword").findOne({
     where: { userName: studentData.userName },
   });
-  bcrypt.compare(
-    studentData.password,
-    student.password,
-    async (err: any, result: boolean) => {
-      if (!result || err) {
-        return res.status(400).send({ error: "Wrong credentials." });
-      } else {
-        const token = createToken();
-        student.update({ token: token });
-        await student.save();
-        return res.status(200).send({ token: token });
-      }
-    },
-  );
+  const isMatch = bcrypt.compareSync(studentData.password, student.password);
+  if (isMatch) {
+    const token = createJWToken(student.id, student.userName);
+    return token;
+  } else {
+    return null;
+  }
 };

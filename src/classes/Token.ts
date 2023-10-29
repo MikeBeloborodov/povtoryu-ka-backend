@@ -5,11 +5,7 @@ export class TokenInfo {
   @IsNotEmpty()
   token: string;
 
-  @IsNotEmpty()
-  userName: string;
-
-  constructor({ token, userName }: TokenReqBody) {
+  constructor({ token }: TokenReqBody) {
     this.token = token;
-    this.userName = userName;
   }
 }

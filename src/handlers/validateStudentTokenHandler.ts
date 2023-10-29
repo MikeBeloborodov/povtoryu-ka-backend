@@ -1,37 +1,30 @@
 import express from "express";
-import { validateTokenBody } from "../bin/validateTokenBody";
-import { validateToken } from "../db/bin/validateToken";
+import { validateTokenHeader } from "../bin/validateTokenHeader";
 import { validateRequestBody } from "../bin/validateRequestBody";
+import { veiryJWToken } from "../bin/utils";
+
+require("dotenv").config();
 
 export const validateStudentTokenHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
   let validatedData;
+
   // validate req body
   try {
-    validatedData = await validateRequestBody(req, validateTokenBody);
+    validatedData = await validateRequestBody(req, validateTokenHeader);
   } catch (validationError) {
     return res
       .status(400)
       .send({ error: "Wrong request body", error_message: validationError });
   }
 
-  // check token in db
+  // verify jwt
   try {
-    const db_res = await validateToken(
-      validatedData.token,
-      validatedData.userName,
-      "user",
-    );
-    if (db_res) {
-      return res.status(200).send(db_res);
-    } else {
-      return res
-        .status(400)
-        .send({ error: "Wrong credentials, no such token or user." });
-    }
-  } catch (db_error) {
-    return res.status(500).send({ error: "Error with DB. Call admin." });
+    veiryJWToken(validatedData.token, process.env.SECRET_TOKEN_KEY);
+    return res.status(200).send({ message: "Verified token." });
+  } catch (verificationError) {
+    return res.status(400).send({ error: "Wrong JWT." });
   }
 };

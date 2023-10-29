@@ -1,8 +1,8 @@
 import express from "express";
 import { validateNewStudentToken } from "../bin/validateNewStudentToken";
-import { validateToken } from "../db/bin/validateToken";
 import { saveNewStudentCode } from "../db/bin/saveNewStudentCode";
 import { validateRequestBody } from "../bin/validateRequestBody";
+import { veiryJWToken } from "../bin/utils";
 
 export const registerNewStudentCodeHandler = async (
   req: express.Request,
@@ -21,21 +21,9 @@ export const registerNewStudentCodeHandler = async (
 
   // validate teacher token
   try {
-    if (
-      !(await validateToken(
-        validatedData.token,
-        validatedData.teacherName,
-        "teacher",
-      ))
-    ) {
-      return res.status(400).send({
-        error_message: "Provided teacher token or username is invalid.",
-      });
-    }
-  } catch (db_errors) {
-    return res.status(500).send({
-      error: "Error with DB. Call admin.",
-    });
+    veiryJWToken(validatedData.token, process.env.SECRET_TOKEN_KEY);
+  } catch (verificationError) {
+    return res.status(400).send({ error: "Wrong JWT." });
   }
 
   // save new student code

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1698533918154" clover="3.2.0">
-  <project timestamp="1698533918154" name="All files">
-    <metrics statements="526" coveredstatements="244" conditionals="54" coveredconditionals="1" methods="81" coveredmethods="15" elements="661" coveredelements="260" complexity="0" loc="526" ncloc="526" packages="7" files="41" classes="41"/>
+<coverage generated="1698598470783" clover="3.2.0">
+  <project timestamp="1698598470783" name="All files">
+    <metrics statements="544" coveredstatements="299" conditionals="50" coveredconditionals="7" methods="83" coveredmethods="30" elements="677" coveredelements="336" complexity="0" loc="544" ncloc="544" packages="7" files="40" classes="40"/>
     <package name="src">
       <metrics statements="40" coveredstatements="38" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="index.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/index.ts">
@@ -37,7 +37,7 @@
         <line num="41" count="1" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
         <line num="45" count="1" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
         <line num="50" count="1" type="stmt"/>
         <line num="52" count="1" type="stmt"/>
         <line num="54" count="1" type="stmt"/>
@@ -49,18 +49,7 @@
       </file>
     </package>
     <package name="src.bin">
-      <metrics statements="161" coveredstatements="42" conditionals="19" coveredconditionals="0" methods="31" coveredmethods="5"/>
-      <file name="createTeacherCredentials.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/createTeacherCredentials.ts">
-        <metrics statements="8" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="11" count="0" type="stmt"/>
-      </file>
+      <metrics statements="157" coveredstatements="52" conditionals="22" coveredconditionals="3" methods="29" coveredmethods="9"/>
       <file name="processWords.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/processWords.ts">
         <metrics statements="96" coveredstatements="9" conditionals="11" coveredconditionals="0" methods="11" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
@@ -160,16 +149,15 @@
         <line num="146" count="0" type="stmt"/>
         <line num="149" count="0" type="stmt"/>
       </file>
-      <file name="testEndpoint.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/testEndpoint.ts">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-      </file>
       <file name="utils.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/utils.ts">
-        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
       </file>
       <file name="validateNewStudentToken.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateNewStudentToken.ts">
         <metrics statements="9" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -186,12 +174,12 @@
       <file name="validateRequestBody.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateRequestBody.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
       </file>
       <file name="validateStudentLogin.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateStudentLogin.ts">
-        <metrics statements="7" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="8" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -199,6 +187,7 @@
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="11" count="0" type="stmt"/>
       </file>
       <file name="validateStudentRegBody.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateStudentRegBody.ts">
         <metrics statements="8" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -212,15 +201,15 @@
         <line num="11" count="0" type="stmt"/>
       </file>
       <file name="validateTeacherLogin.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateTeacherLogin.ts">
-        <metrics statements="8" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="8" coveredstatements="8" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="11" count="0" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="11" count="1" type="stmt"/>
       </file>
       <file name="validateTeacherReg.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateTeacherReg.ts">
         <metrics statements="8" coveredstatements="8" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -233,20 +222,21 @@
         <line num="10" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="11" count="1" type="stmt"/>
       </file>
-      <file name="validateTokenBody.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateTokenBody.ts">
-        <metrics statements="8" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="validateTokenHeader.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/bin/validateTokenHeader.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="5" coveredconditionals="3" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="11" count="0" type="stmt"/>
+        <line num="7" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="12" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.classes">
-      <metrics statements="78" coveredstatements="65" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
+      <metrics statements="76" coveredstatements="67" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="3"/>
       <file name="Student.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/classes/Student.ts">
         <metrics statements="23" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
@@ -274,7 +264,7 @@
         <line num="70" count="0" type="stmt"/>
       </file>
       <file name="Teacher.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/classes/Teacher.ts">
-        <metrics statements="18" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <metrics statements="18" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="6" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
@@ -286,8 +276,8 @@
         <line num="25" count="1" type="stmt"/>
         <line num="27" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
@@ -295,13 +285,11 @@
         <line num="47" count="0" type="stmt"/>
       </file>
       <file name="Token.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/classes/Token.ts">
-        <metrics statements="6" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
       </file>
       <file name="classes.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/classes/classes.ts">
         <metrics statements="31" coveredstatements="31" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -348,12 +336,20 @@
       </file>
     </package>
     <package name="src.db.bin">
-      <metrics statements="90" coveredstatements="38" conditionals="18" coveredconditionals="1" methods="22" coveredmethods="4"/>
+      <metrics statements="99" coveredstatements="58" conditionals="15" coveredconditionals="2" methods="24" coveredmethods="9"/>
       <file name="createCode.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/createCode.ts">
         <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
+      </file>
+      <file name="createJWToken.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/createJWToken.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
       </file>
       <file name="createRandomString.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/createRandomString.ts">
         <metrics statements="16" coveredstatements="4" conditionals="3" coveredconditionals="0" methods="4" coveredmethods="0"/>
@@ -374,11 +370,14 @@
         <line num="23" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
       </file>
-      <file name="createToken.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/createToken.ts">
-        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="deleteTeacher.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/deleteTeacher.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
       </file>
       <file name="getStudentsData.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/getStudentsData.ts">
         <metrics statements="8" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -392,31 +391,33 @@
         <line num="12" count="0" type="stmt"/>
       </file>
       <file name="loginStudent.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/loginStudent.ts">
-        <metrics statements="11" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="10" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="11" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
       </file>
       <file name="loginTeacher.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/loginTeacher.ts">
-        <metrics statements="10" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="13" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="9" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
       </file>
       <file name="saveNewStudentCode.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/saveNewStudentCode.ts">
         <metrics statements="10" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -432,20 +433,28 @@
         <line num="19" count="0" type="stmt"/>
       </file>
       <file name="saveStudent.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/saveStudent.ts">
-        <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="11" coveredstatements="4" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+      </file>
+      <file name="saveTeacher.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/saveTeacher.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-      </file>
-      <file name="saveTeacher.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/saveTeacher.ts">
-        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
       </file>
       <file name="validateSpecialCode.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/validateSpecialCode.ts">
         <metrics statements="10" coveredstatements="7" conditionals="4" coveredconditionals="1" methods="2" coveredmethods="2"/>
@@ -459,18 +468,6 @@
         <line num="11" count="0" type="stmt"/>
         <line num="12" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="13" count="0" type="stmt"/>
-      </file>
-      <file name="validateToken.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/db/bin/validateToken.ts">
-        <metrics statements="9" coveredstatements="3" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
       </file>
     </package>
     <package name="src.db.ormModels">
@@ -501,7 +498,28 @@
       </file>
     </package>
     <package name="src.handlers">
-      <metrics statements="142" coveredstatements="46" conditionals="17" coveredconditionals="0" methods="18" coveredmethods="2"/>
+      <metrics statements="157" coveredstatements="69" conditionals="13" coveredconditionals="2" methods="20" coveredmethods="6"/>
+      <file name="deleteTeacherHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/deleteTeacherHandler.ts">
+        <metrics statements="18" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
       <file name="getWordsHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/getWordsHandler.ts">
         <metrics statements="16" coveredstatements="2" conditionals="3" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="2" count="1" type="stmt"/>
@@ -528,35 +546,36 @@
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
       </file>
       <file name="loginTeacherHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/loginTeacherHandler.ts">
-        <metrics statements="14" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="15" coveredstatements="11" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="22" count="0" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="1" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
       </file>
       <file name="registerNewStudentCodeHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/registerNewStudentCodeHandler.ts">
-        <metrics statements="17" coveredstatements="5" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="16" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -567,13 +586,12 @@
         <line num="14" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
       </file>
       <file name="registerStudentHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/registerStudentHandler.ts">
         <metrics statements="17" coveredstatements="5" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -616,18 +634,17 @@
         <line num="39" count="1" type="stmt"/>
       </file>
       <file name="returnStudentsDataHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/returnStudentsDataHandler.ts">
-        <metrics statements="19" coveredstatements="5" conditionals="3" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="18" coveredstatements="5" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
@@ -638,38 +655,36 @@
         <line num="43" count="0" type="stmt"/>
       </file>
       <file name="validateStudentTokenHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/validateStudentTokenHandler.ts">
-        <metrics statements="14" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="13" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
       </file>
       <file name="validateTeacherTokenHandler.ts" path="/home/mike/Code/my_projects/povtory-ka-backend/src/handlers/validateTeacherTokenHandler.ts">
-        <metrics statements="14" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="13" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
       </file>
     </package>
   </project>

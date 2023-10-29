@@ -8,4 +8,5 @@ export const validateStudentLogin = async (req: express.Request) => {
   const studentInfoObject = new StudentLoginInfo(loginBody);
   const errors = await validate(studentInfoObject);
   if (errors.length > 0) throw errors;
+  return studentInfoObject;
 };

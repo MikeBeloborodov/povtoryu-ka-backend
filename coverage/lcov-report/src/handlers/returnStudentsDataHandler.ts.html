@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30% </span>
+                <span class="strong">31.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/20</span>
+                <span class='fraction'>6/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.31% </span>
+                <span class="strong">27.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/19</span>
+                <span class='fraction'>5/18</span>
             </div>
         
             
@@ -111,20 +111,14 @@
 <a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,7 +126,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -154,41 +154,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { getStudentsData } from "../db/bin/getStudentsData";
-import { validateTeacherCredentials } from "../bin/createTeacherCredentials";
+import { validateTokenHeader } from "../bin/validateTokenHeader";
 import { validateRequestBody } from "../bin/validateRequestBody";
-import { validateToken } from "../db/bin/validateToken";
 import express from "express";
+import { veiryJWToken } from "../bin/utils";
+import { JWToken } from "../interfaces/Token";
 &nbsp;
 export const returnStudentsDataHandler = <span class="fstat-no" title="function not covered" >async (</span>
   req: express.Request,
   res: express.Response,
 ) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
   let validatedData;
-  // check req body
+  let JWToken: JWToken;
+&nbsp;
+  // validate req body
 <span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    validatedData = await validateRequestBody(req, validateTeacherCredentials);</span>
-  } catch (validationError) {
+<span class="cstat-no" title="statement not covered" >    validatedData = await validateRequestBody(req, validateTokenHeader);</span>
+  } catch (validationErrors) {
 <span class="cstat-no" title="statement not covered" >    return res</span>
       .status(400)
-      .send({ error: "Wrong request body", error_message: validationError });
+      .send({ error: "Wrong request body", error_message: validationErrors });
   }
 &nbsp;
-  // check teacher token validity
+  // validate teacher token
 <span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (</span>
-      !validateToken(validatedData.token, validatedData.userName, "teacher")
-    ) {
-<span class="cstat-no" title="statement not covered" >      return res</span>
-        .status(400)
-        .send({ error: "Wrong token or username provided." });
-    }
-  } catch (dbError) {
-<span class="cstat-no" title="statement not covered" >    return res.status(500).send({ error: "Error with DB. Call admin." });</span>
+<span class="cstat-no" title="statement not covered" >    JWToken = veiryJWToken(</span>
+      validatedData.token,
+      process.env.SECRET_TOKEN_KEY,
+    ) as JWToken;
+  } catch (verificationError) {
+<span class="cstat-no" title="statement not covered" >    return res.status(400).send({ error: "Wrong JWT." });</span>
   }
 &nbsp;
   //send users data
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    const studentsData = <span class="cstat-no" title="statement not covered" >await getStudentsData(validatedData.teacherName);</span>
+    const studentsData = <span class="cstat-no" title="statement not covered" >await getStudentsData(JWToken.userName);</span>
 <span class="cstat-no" title="statement not covered" >    if (studentsData) {</span>
 <span class="cstat-no" title="statement not covered" >      return res.status(200).send(studentsData);</span>
     } else {
@@ -205,7 +205,7 @@ export const returnStudentsDataHandler = <span class="fstat-no" title="function 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-28T22:58:38.132Z
+                at 2023-10-29T16:54:30.760Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

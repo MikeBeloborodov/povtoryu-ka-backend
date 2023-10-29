@@ -1,7 +1,9 @@
 import express from "express";
-import { validateToken } from "../db/bin/validateToken";
 import { validateRequestBody } from "../bin/validateRequestBody";
-import { validateTokenBody } from "../bin/validateTokenBody";
+import { validateTokenHeader } from "../bin/validateTokenHeader";
+import { veiryJWToken } from "../bin/utils";
+
+require("dotenv").config();
 
 export const validateTeacherTokenHandler = async (
   req: express.Request,
@@ -10,28 +12,18 @@ export const validateTeacherTokenHandler = async (
   let validatedData;
   // validate req body
   try {
-    validatedData = await validateRequestBody(req, validateTokenBody);
+    validatedData = await validateRequestBody(req, validateTokenHeader);
   } catch (validationErrors) {
     return res
       .status(400)
       .send({ error: "Wrong request body", error_message: validationErrors });
   }
 
-  // check token in db
+  // verify jwt
   try {
-    const db_res = await validateToken(
-      validatedData.token,
-      validatedData.userName,
-      "teacher",
-    );
-    if (db_res) {
-      return res.status(200).send(db_res);
-    } else {
-      return res
-        .status(400)
-        .send({ error: "Wrong credentials, no such token or teacher." });
-    }
-  } catch (db_error) {
-    return res.status(500).send({ error: "Error with DB. Call admin." });
+    veiryJWToken(validatedData.token, process.env.SECRET_TOKEN_KEY);
+    return res.status(200).send({ message: "Verified token." });
+  } catch (verificationError) {
+    return res.status(400).send({ error: "Wrong JWT." });
   }
 };

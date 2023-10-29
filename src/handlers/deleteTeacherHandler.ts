@@ -1,17 +1,16 @@
-import { getStudentsData } from "../db/bin/getStudentsData";
-import { validateTokenHeader } from "../bin/validateTokenHeader";
-import { validateRequestBody } from "../bin/validateRequestBody";
 import express from "express";
-import { veiryJWToken } from "../bin/utils";
 import { JWToken } from "../interfaces/Token";
+import { veiryJWToken } from "../bin/utils";
+import { validateRequestBody } from "../bin/validateRequestBody";
+import { validateTokenHeader } from "../bin/validateTokenHeader";
+import { deleteTeacher } from "../db/bin/deleteTeacher";
 
-export const returnStudentsDataHandler = async (
+export const deleteTeacherHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
   let validatedData;
-  let JWToken: JWToken;
-
+  let JWToken;
   // validate req body
   try {
     validatedData = await validateRequestBody(req, validateTokenHeader);
@@ -31,15 +30,15 @@ export const returnStudentsDataHandler = async (
     return res.status(400).send({ error: "Wrong JWT." });
   }
 
-  //send users data
+  // delete teacher from DB
   try {
-    const studentsData = await getStudentsData(JWToken.userName);
-    if (studentsData) {
-      return res.status(200).send(studentsData);
+    const isDeleted = await deleteTeacher(JWToken.userName);
+    if (isDeleted) {
+      return res.status(200).send({ message: "Teacher deleted." });
     } else {
-      return res.status(404).send({ error: "No students found." });
+      return res.status(400).send({ error: "Could not find teacher in DB" });
     }
-  } catch (db_error) {
+  } catch (dbError) {
     return res.status(500).send({ error: "Error with DB. Call admin." });
   }
 };

@@ -22,9 +22,6 @@ export const Student = seq.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    token: {
-      type: DataTypes.STRING,
-    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,

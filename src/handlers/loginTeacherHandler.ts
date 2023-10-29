@@ -17,8 +17,14 @@ export const loginTeacherHandler = async (
 
   // login teacher / return token
   try {
-    await loginTeacher(res, validatedData);
+    const token = await loginTeacher(validatedData);
+    if (token) {
+      return res.status(200).send({ token: token });
+    } else {
+      return res.status(400).send({ error: "Wrong credentials" });
+    }
   } catch (db_error) {
+    console.log(db_error);
     return res.status(500).send({
       error_message: "Error with DB. Call admin.",
     });
