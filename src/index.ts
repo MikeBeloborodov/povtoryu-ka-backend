@@ -3,14 +3,16 @@ import parser from "body-parser";
 import cors from "cors";
 import bodyParserErrorHandler from "express-body-parser-error-handler";
 import { getWordsHandler } from "./handlers/getWordsHandler";
-import { createTeacherHandler } from "./handlers/createTeacherHandler";
+import { registerTeacherHandler } from "./handlers/registerTeacherHandler";
 import { sequelize } from "./db/db";
-import { createUserHandler } from "./handlers/createUserHandler";
 import { loginTeacherHandler } from "./handlers/loginTeacherHandler";
-import { checkTeacherTokenHandler } from "./handlers/checkTeacherTokenHandler";
-import { createNewUserTokenHandler } from "./handlers/createNewUserTokenHandler";
-import { loginUserHandler } from "./handlers/loginUserHandler";
-import { checkUserTokenHandler } from "./handlers/checkUserTokenHandler";
+import { validateTeacherTokenHandler } from "./handlers/validateTeacherTokenHandler";
+import { registerNewStudentCodeHandler } from "./handlers/registerNewStudentCodeHandler";
+import { registerStudentHandler } from "./handlers/registerStudentHandler";
+import { loginStudentHandler } from "./handlers/loginStudentHandler";
+import { validateStudentTokenHandler } from "./handlers/validateStudentTokenHandler";
+import { returnStudentsDataHandler } from "./handlers/returnStudentsDataHandler";
+import { testEndpoint } from "./bin/testEndpoint";
 
 require("dotenv").config();
 
@@ -35,22 +37,30 @@ app.use(bodyParserErrorHandler());
 // get an array of words from user, process them and save to DB
 app.post("/api/v1/words", getWordsHandler);
 
-// teachers endpoints
-app.post("/api/v1/teacher", createTeacherHandler);
+// teacher endpoints
+app.post("/api/v1/teacher/register", registerTeacherHandler);
 
 app.post("/api/v1/teacher/login", loginTeacherHandler);
 
-app.post("/api/v1/teacher/token", checkTeacherTokenHandler);
+app.post("/api/v1/teacher/token", validateTeacherTokenHandler);
 
-// users enpoints
-app.post("/api/v1/user", createUserHandler);
+app.delete("/api/v1/teacher/delete");
 
-app.post("/api/v1/user/login", loginUserHandler);
+// student enpoints
+app.post("/api/v1/student/register", registerStudentHandler);
 
-app.post("/api/v1/user/token/new", createNewUserTokenHandler);
+app.post("/api/v1/student/login", loginStudentHandler);
 
-app.post("/api/v1/user/token", checkUserTokenHandler);
+app.post("/api/v1/student/code/new", registerNewStudentCodeHandler);
 
-app.listen(port, () => {
+app.post("/api/v1/student/token", validateStudentTokenHandler);
+
+app.post("/api/v1/students", returnStudentsDataHandler);
+
+app.get("/api/v1/test", testEndpoint);
+
+export const server = app.listen(port, () => {
   console.log("Server is running on http://localhost:8080");
 });
+
+export default app;

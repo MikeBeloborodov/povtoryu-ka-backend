@@ -1,39 +1,26 @@
 import express from "express";
-import { createLoginTeacherObject } from "../bin/loginTeacher";
 import { loginTeacher } from "../db/bin/loginTeacher";
+import { validateRequestBody } from "../bin/validateRequestBody";
+import { validateTeacherLogin } from "../bin/validateTeacherLogin";
 
 export const loginTeacherHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  let teacherLogin;
-  let teacherLoginErrors;
-  // check provided data with class validator
+  let validatedData;
+  // validate req body
   try {
-    const [teacherLoginRes, teacherLoginErrorsRes] =
-      await createLoginTeacherObject(req.body);
-    if (teacherLoginErrorsRes.length > 0) {
-      teacherLoginErrors = teacherLoginErrorsRes;
-      throw "Bad information provided";
-    }
-    teacherLogin = teacherLoginRes;
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send({
-      error: "Bad information provided",
-      error_message: teacherLoginErrors,
-    });
+    validatedData = await validateRequestBody(req, validateTeacherLogin);
+  } catch (validationError) {
+    return res.status(400).send({ error: "Wrong request body." });
   }
-  // get teacher from DB
+
+  // login teacher / return token
   try {
-    const teacherAuth = await loginTeacher(teacherLogin);
-    if (teacherAuth) return res.status(200).send(teacherAuth);
-    else {
-      throw "Wrong credentials";
-    }
+    await loginTeacher(res, validatedData);
   } catch (db_error) {
-    return res.status(400).send({
-      error_message: db_error,
+    return res.status(500).send({
+      error_message: "Error with DB. Call admin.",
     });
   }
 };

@@ -40,6 +40,9 @@ export const Teacher = seq.define(
       withoutPassword: {
         attributes: { exclude: ["password"] },
       },
+      withPassword: {
+        attributes: { include: ["password"] },
+      },
     },
   },
 );
