@@ -3,6 +3,7 @@ import { saveTeacher } from "../db/bin/saveTeacher";
 import { validateRequestBody } from "../bin/validateRequestBody";
 import { validateTeacherReg } from "../bin/validateTeacherReg";
 import { validateSpecialCode } from "../db/bin/validateSpecialCode";
+import { returnTeacher } from "../db/bin/returnTeacher";
 
 export const registerTeacherHandler = async (
   req: express.Request,
@@ -25,6 +26,14 @@ export const registerTeacherHandler = async (
     }
   } catch (dbError) {
     return res.status(500).send({ error: "Error with DB. Call admin." });
+  }
+
+  // check if already exists
+  try {
+    const teacher = await returnTeacher(validatedData.userName);
+    if (teacher) throw "Duplication error.";
+  } catch (duplicationError) {
+    return res.status(409).send({ error: duplicationError });
   }
 
   // save a teacher to DB

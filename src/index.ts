@@ -18,10 +18,7 @@ require("dotenv").config();
 
 // db connection
 try {
-  (async () => {
-    await sequelize.authenticate();
-    console.log("Connected to DB.");
-  })();
+  sequelize.authenticate();
 } catch (error) {
   console.log("Unable to connect to DB.");
   console.log(error);

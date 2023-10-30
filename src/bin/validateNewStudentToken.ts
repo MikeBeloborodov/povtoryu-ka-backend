@@ -1,9 +1,9 @@
-import { NewStudentTokenInfo } from "../classes/Student";
-import { NewStudentTokenRequestBody } from "../interfaces/Student";
+import { NewStudentCodeInfo } from "../classes/Student";
+import { NewStudentCodeRequestBody } from "../interfaces/Student";
 import { validate } from "class-validator";
 import express from "express";
 
-export const validateNewStudentToken = async (req: express.Request) => {
+export const validateNewStudentCode = async (req: express.Request) => {
   const newTokenData: NewStudentTokenRequestBody = req.body;
   const studentToken = new NewStudentTokenInfo(newTokenData);
   const validationErrors = await validate(studentToken);
@@ -12,4 +12,13 @@ export const validateNewStudentToken = async (req: express.Request) => {
   } else {
     return studentToken;
   }
+};
+
+export const validateTokenHeader = async (req: express.Request) => {
+  const tokenHeader = req.header("Authorization")?.replace("Bearer ", "");
+  const tokenBody: TokenReqBody = { token: tokenHeader };
+  const token = new TokenInfo(tokenBody);
+  const validationErrors = await validate(token);
+  if (validationErrors.length > 0) throw validationErrors;
+  return token;
 };

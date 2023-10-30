@@ -8,6 +8,8 @@ export const loginTeacher = async (data: TeacherLoginInfo) => {
     where: { userName: data.userName },
   });
 
+  if (!teacher) return null;
+
   // compare provided password and hashed password
   const isMatch = bcrypt.compareSync(data.password, teacher.password);
   if (isMatch) {

@@ -3,9 +3,7 @@ export interface StudentLoginRequestBody {
   password: string;
 }
 
-export interface NewStudentTokenRequestBody {
-  token: string;
-  teacherName: string;
+export interface NewStudentCodeRequestBody {
   studentName: string;
 }
 

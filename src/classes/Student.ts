@@ -1,6 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 import {
-  NewStudentTokenRequestBody,
+  NewStudentCodeRequestBody,
   StudentLoginRequestBody,
   StudentRegRequestBody,
 } from "../interfaces/Student";
@@ -38,19 +38,12 @@ export class StudentLoginInfo {
   }
 }
 
-export class NewStudentTokenInfo {
-  @IsNotEmpty()
-  token: string;
-
+export class NewStudentCodeInfo {
   @IsNotEmpty()
   studentName: string;
 
-  @IsNotEmpty()
-  teacherName: string;
-  constructor({ token, studentName, teacherName }: NewStudentTokenRequestBody) {
-    this.token = token;
+  constructor({ studentName }: NewStudentCodeRequestBody) {
     this.studentName = studentName;
-    this.teacherName = teacherName;
   }
 }
 
