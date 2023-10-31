@@ -11,7 +11,7 @@ export const loginStudent = async (studentData: StudentLoginInfo) => {
 
   const isMatch = bcrypt.compareSync(studentData.password, student.password);
   if (isMatch) {
-    const token = createJWToken(student.id, student.userName);
+    const token = createJWToken(student.id, student.userName, student.role);
     return token;
   } else {
     return null;

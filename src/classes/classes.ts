@@ -1,25 +1,6 @@
 import { IsNotEmpty, IsInt } from "class-validator";
 import { StudentLoginRequestBody } from "interfaces/Student";
 
-export class Teacher {
-  id: number;
-
-  @IsNotEmpty()
-  userName: string;
-
-  @IsNotEmpty()
-  password: string;
-
-  createdAt: Date;
-
-  updatedAt: Date;
-
-  @IsNotEmpty()
-  specialCode: string;
-
-  token: string;
-}
-
 export class Words {
   words: Words[];
 }

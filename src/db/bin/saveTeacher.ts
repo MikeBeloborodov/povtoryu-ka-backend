@@ -9,6 +9,7 @@ export const saveTeacher = async (data: TeacherRegInfo) => {
   const teacher = TeacherModel.build({
     userName: data.userName,
     password: hash,
+    role: "teacher",
   });
   await teacher.save();
 };

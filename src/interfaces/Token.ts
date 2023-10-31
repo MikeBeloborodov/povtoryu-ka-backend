@@ -5,4 +5,5 @@ export interface TokenReqBody {
 export interface JWToken {
   id: number;
   userName: string;
+  role: string;
 }

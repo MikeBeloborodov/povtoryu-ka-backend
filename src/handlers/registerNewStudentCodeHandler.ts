@@ -4,6 +4,7 @@ import { saveNewStudentCode } from "../db/bin/saveNewStudentCode";
 import { validateRequestBody } from "../bin/validateRequestBody";
 import { veiryJWToken } from "../bin/utils";
 import { JWToken } from "../interfaces/Token";
+import { validateTokenHeader } from "../bin/validateTokenHeader";
 
 export const registerNewStudentCodeHandler = async (
   req: express.Request,
@@ -11,6 +12,7 @@ export const registerNewStudentCodeHandler = async (
 ) => {
   // validate req body
   let validatedData;
+  let tokenRaw;
   let verifiedToken;
   try {
     validatedData = await validateRequestBody(req, validateNewStudentCode);
@@ -22,10 +24,15 @@ export const registerNewStudentCodeHandler = async (
     });
   }
 
-  // validate teacher token
+  // validate req header
+  try {
+    tokenRaw = await validateTokenHeader(req);
+  } catch (validationError) {}
+
+  // verify teacher token
   try {
     verifiedToken = veiryJWToken(
-      validatedData.jwt.token,
+      tokenRaw.token,
       process.env.SECRET_TOKEN_KEY,
     ) as JWToken;
   } catch (verificationError) {
@@ -34,15 +41,12 @@ export const registerNewStudentCodeHandler = async (
 
   // save new student code
   try {
-    console.log(validatedData);
-    console.log(verifiedToken);
     const newStudentCode = await saveNewStudentCode(
       verifiedToken.userName,
-      validatedData.codeInfo.studentName,
+      validatedData.studentName,
     );
     return res.status(201).send(newStudentCode);
   } catch (db_error) {
-    console.log(db_error);
     return res.status(500).send({ error: "Error with DB. Call admin." });
   }
 };

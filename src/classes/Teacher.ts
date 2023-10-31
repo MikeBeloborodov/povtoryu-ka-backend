@@ -5,6 +5,25 @@ import {
 } from "../interfaces/Teacher";
 import { IsNotEmpty } from "class-validator";
 
+export class Teacher {
+  id: number;
+
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
+  password: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  @IsNotEmpty()
+  specialCode: string;
+
+  role: string;
+}
+
 export class TeacherRegInfo {
   @IsNotEmpty()
   userName: string;

@@ -13,7 +13,7 @@ export const loginTeacher = async (data: TeacherLoginInfo) => {
   // compare provided password and hashed password
   const isMatch = bcrypt.compareSync(data.password, teacher.password);
   if (isMatch) {
-    const token = createJWToken(teacher.id, teacher.userName);
+    const token = createJWToken(teacher.id, teacher.userName, teacher.role);
     return token;
   } else {
     return null;

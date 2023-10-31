@@ -13,6 +13,8 @@ import { loginStudentHandler } from "./handlers/loginStudentHandler";
 import { validateStudentTokenHandler } from "./handlers/validateStudentTokenHandler";
 import { returnStudentsDataHandler } from "./handlers/returnStudentsDataHandler";
 import { deleteTeacherHandler } from "./handlers/deleteTeacherHandler";
+import { deleteStudentCodeHandler } from "./handlers/deleteStudentCodeHandler";
+import { deleteStudentHandler } from "./handlers/deleteStudentHandler";
 
 require("dotenv").config();
 
@@ -48,7 +50,11 @@ app.post("/api/v1/student/register", registerStudentHandler);
 
 app.post("/api/v1/student/login", loginStudentHandler);
 
+app.delete("/api/v1/student/delete", deleteStudentHandler);
+
 app.post("/api/v1/student/code/new", registerNewStudentCodeHandler);
+
+app.delete("/api/v1/student/code/delete", deleteStudentCodeHandler);
 
 app.get("/api/v1/student/token", validateStudentTokenHandler);
 

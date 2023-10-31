@@ -15,6 +15,7 @@ export const saveStudent = async (studentInfo: StudentClass) => {
     password: hash,
     teacherId: studentCode.teacherId,
     nickname: studentCode.nickname,
+    role: "student",
   });
   await user.save();
 };

@@ -3,6 +3,8 @@ import {
   NewStudentCodeRequestBody,
   StudentLoginRequestBody,
   StudentRegRequestBody,
+  DeleteStudentCodeRequestBody,
+  StudentDeleteRequestBody,
 } from "../interfaces/Student";
 
 export class Student {
@@ -47,6 +49,15 @@ export class NewStudentCodeInfo {
   }
 }
 
+export class DeleteStudentCodeInfo {
+  @IsNotEmpty()
+  studentName: string;
+
+  constructor({ studentName }: DeleteStudentCodeRequestBody) {
+    this.studentName = studentName;
+  }
+}
+
 export class StudentRegInfo {
   @IsNotEmpty()
   userName: string;
@@ -61,5 +72,14 @@ export class StudentRegInfo {
     this.userName = userName;
     this.password = password;
     this.specialCode = specialCode;
+  }
+}
+
+export class StudentDeleteInfo {
+  @IsNotEmpty()
+  studentName: string;
+
+  constructor({ studentName }: StudentDeleteRequestBody) {
+    this.studentName = studentName;
   }
 }
