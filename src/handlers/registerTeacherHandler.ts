@@ -19,11 +19,15 @@ export const registerTeacherHandler = async (
       .status(400)
       .send({ error: "Wrong request body", error_message: validationError });
   }
+
   // validate special code
   try {
-    if (!validateSpecialCode(validatedData.specialCode, "teacher")) {
+    const validation = await validateSpecialCode(
+      validatedData.specialCode,
+      "teacher",
+    );
+    if (!validation)
       return res.status(400).send({ error: "Wrong special code." });
-    }
   } catch (dbError) {
     return res.status(500).send({ error: "Error with DB. Call admin." });
   }

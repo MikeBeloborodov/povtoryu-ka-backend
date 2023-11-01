@@ -60,6 +60,9 @@ app.get("/api/v1/student/token", validateStudentTokenHandler);
 
 app.get("/api/v1/students", returnStudentsDataHandler);
 
+// cards
+app.post("/api/v1/card");
+
 export const server = app.listen(port, () => {
   console.log("Server is running on http://localhost:8080");
 });

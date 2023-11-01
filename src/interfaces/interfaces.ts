@@ -43,26 +43,6 @@ export interface WordData {
   studentId: number;
 }
 
-export interface CardData {
-  category: string;
-  definition: string;
-  images: ImageObject[];
-  in_context: string[];
-  new_card: boolean;
-  part_of_speech: string;
-  part_of_speech_ru: string;
-  theme: string;
-  translation: string[];
-  word: string;
-  teacher_id: number;
-  student_id: number;
-}
-
-export interface ImageObject {
-  thumb: string;
-  original: string;
-}
-
 export interface EnglishDictAPIEntry {
   meta: EnglishDictAPIMeta;
   fl: string;

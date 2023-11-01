@@ -8,6 +8,7 @@ export const loginTeacherHandler = async (
   res: express.Response,
 ) => {
   let validatedData;
+
   // validate req body
   try {
     validatedData = await validateRequestBody(req, validateTeacherLogin);
@@ -24,7 +25,6 @@ export const loginTeacherHandler = async (
       return res.status(400).send({ error: "Wrong credentials" });
     }
   } catch (db_error) {
-    console.log(db_error);
     return res.status(500).send({
       error_message: "Error with DB. Call admin.",
     });

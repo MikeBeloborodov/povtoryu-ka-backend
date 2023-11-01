@@ -53,16 +53,3 @@ export class TeacherLoginInfo {
     this.password = password;
   }
 }
-
-export class TeacherCredentialsInfo {
-  @IsNotEmpty()
-  token: string;
-
-  @IsNotEmpty()
-  teacherName: string;
-
-  constructor({ token, teacherName }: TeacherCredentialsBody) {
-    this.token = token;
-    this.teacherName = teacherName;
-  }
-}

@@ -1,27 +1,26 @@
 import express from "express";
-import { validateNewStudentCode } from "../bin/validateNewStudentCode";
-import { saveNewStudentCode } from "../db/bin/saveNewStudentCode";
 import { validateRequestBody } from "../bin/validateRequestBody";
+import { validateNewCard } from "../bin/validateNewCard";
+import { validateTokenHeader } from "../bin/validateTokenHeader";
 import { veiryJWToken } from "../bin/utils";
 import { JWToken } from "../interfaces/Token";
-import { validateTokenHeader } from "../bin/validateTokenHeader";
+import { validateRole } from "../bin/validateRole";
 
-export const registerNewStudentCodeHandler = async (
+export const createCard = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  // validate req body
   let validatedData;
   let tokenRaw;
   let verifiedToken;
+
+  // validate req body
   try {
-    validatedData = await validateRequestBody(req, validateNewStudentCode);
+    validatedData = await validateRequestBody(req, validateNewCard);
   } catch (validationError) {
-    console.log(validationError);
-    return res.status(400).send({
-      error: "Wrong request body.",
-      error_message: validationError,
-    });
+    return res
+      .status(400)
+      .send({ error: "Wrong request body", error_message: validationError });
   }
 
   // validate req header
@@ -31,7 +30,7 @@ export const registerNewStudentCodeHandler = async (
     return res.status(400).send({ error: "No JWT provided." });
   }
 
-  // verify teacher token
+  // verify token
   try {
     verifiedToken = veiryJWToken(
       tokenRaw.token,
@@ -41,14 +40,15 @@ export const registerNewStudentCodeHandler = async (
     return res.status(400).send({ error: "Wrong JWT." });
   }
 
-  // save new student code
+  // validate role
   try {
-    const newStudentCode = await saveNewStudentCode(
-      verifiedToken.userName,
-      validatedData.studentName,
-    );
-    return res.status(201).send(newStudentCode);
-  } catch (db_error) {
+    const isValid = await validateRole(verifiedToken.userName, "teacher");
+    if (!isValid) {
+      return res
+        .status(403)
+        .send({ error: "You are not allowed to delete users." });
+    }
+  } catch (dbError) {
     return res.status(500).send({ error: "Error with DB. Call admin." });
   }
 };

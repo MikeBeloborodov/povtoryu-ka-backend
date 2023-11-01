@@ -17,7 +17,6 @@ export const deleteStudentCodeHandler = async (
   try {
     validatedData = await validateRequestBody(req, validateDeleteStudentCode);
   } catch (validationErrors) {
-    console.log(validationErrors);
     return res
       .status(400)
       .send({ error: "Wrong request body", error_message: validationErrors });
@@ -27,7 +26,6 @@ export const deleteStudentCodeHandler = async (
   try {
     tokenRaw = await validateTokenHeader(req);
   } catch (validationError) {
-    console.log(validationError);
     return res
       .status(400)
       .send({ error: "Wrong request body", error_message: validationError });
@@ -40,7 +38,6 @@ export const deleteStudentCodeHandler = async (
       process.env.SECRET_TOKEN_KEY,
     ) as JWToken;
   } catch (verificationError) {
-    console.log(verificationError);
     return res.status(400).send({ error: "Wrong JWT." });
   }
 
@@ -58,7 +55,6 @@ export const deleteStudentCodeHandler = async (
         .send({ error: "Could not find student code in DB" });
     }
   } catch (dbError) {
-    console.log(dbError);
     return res.status(500).send({ error: "Error with DB. Call admin." });
   }
 };

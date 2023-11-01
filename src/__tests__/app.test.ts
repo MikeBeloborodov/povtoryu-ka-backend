@@ -10,6 +10,7 @@ const STUDENT_NAME = "testStudent";
 const STUDENT_PASSWORD = "testStudent123";
 let STUDENT_CODE: string;
 let TEACHER_TOKEN: string;
+let STUDENT_TOKEN: string;
 let HAS_TEST_FAILED = false;
 
 // functions
@@ -31,7 +32,48 @@ const sequentialTest = (name: string, action: Function) => {
 // tests
 //
 // teacher tests
-describe("Teacher reg test:", () => {
+describe("Teacher reg wrong body:", () => {
+  sequentialTest("Reg:", async () => {
+    const payload = {
+      userName: TEACHER_NAME,
+      specialCode: TEACHER_SPECIAL_CODE,
+    };
+    const res = await request(app)
+      .post("/api/v1/teacher/register")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher reg no body:", () => {
+  sequentialTest("Reg:", async () => {
+    const res = await request(app)
+      .post("/api/v1/teacher/register")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher reg wrong code:", () => {
+  sequentialTest("Reg:", async () => {
+    const payload = {
+      userName: TEACHER_NAME,
+      password: TEACHER_PASSWORD,
+      specialCode: TEACHER_SPECIAL_CODE + "123",
+    };
+    const res = await request(app)
+      .post("/api/v1/teacher/register")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher reg:", () => {
   sequentialTest("Reg:", async () => {
     const payload = {
       userName: TEACHER_NAME,
@@ -63,11 +105,20 @@ describe("Teacher same data reg test:", () => {
   });
 });
 
+describe("Teacher login test no payload:", () => {
+  sequentialTest("Login:", async () => {
+    const res = await request(app)
+      .post("/api/v1/teacher/login")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
 describe("Teacher login test wrong payload:", () => {
   sequentialTest("Login:", async () => {
     const payload = {
-      userName: TEACHER_NAME + "test",
-      password: TEACHER_PASSWORD + "test",
+      userName: TEACHER_NAME,
     };
     const res = await request(app)
       .post("/api/v1/teacher/login")
@@ -78,7 +129,37 @@ describe("Teacher login test wrong payload:", () => {
   });
 });
 
-describe("Teacher login test:", () => {
+describe("Teacher login wrong pass:", () => {
+  sequentialTest("Login:", async () => {
+    const payload = {
+      userName: TEACHER_NAME,
+      password: TEACHER_PASSWORD + "123",
+    };
+    const res = await request(app)
+      .post("/api/v1/teacher/login")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher login wrong login:", () => {
+  sequentialTest("Login:", async () => {
+    const payload = {
+      userName: TEACHER_NAME + "123",
+      password: TEACHER_PASSWORD,
+    };
+    const res = await request(app)
+      .post("/api/v1/teacher/login")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher login:", () => {
   sequentialTest("Login:", async () => {
     const payload = {
       userName: TEACHER_NAME,
@@ -95,8 +176,80 @@ describe("Teacher login test:", () => {
   });
 });
 
-describe("Teacher get student code:", () => {
-  sequentialTest("Get code:", async () => {
+describe("Teacher validate token wrong token:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/teacher/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN} 123`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher validate token no token:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/teacher/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher validate token:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/teacher/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
+    expect(res.status).toEqual(200);
+  });
+});
+
+describe("Teacher register student wrong body:", () => {
+  sequentialTest("Register code:", async () => {
+    const res = await request(app)
+      .post("/api/v1/student/code/new")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher register student code wrong jwt:", () => {
+  sequentialTest("Register code:", async () => {
+    const payload = {
+      studentName: STUDENT_NICKNAME,
+    };
+    const res = await request(app)
+      .post("/api/v1/student/code/new")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN} 123`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher register student code no jwt:", () => {
+  sequentialTest("Register code:", async () => {
+    const payload = {
+      studentName: STUDENT_NICKNAME,
+    };
+    const res = await request(app)
+      .post("/api/v1/student/code/new")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher register student code:", () => {
+  sequentialTest("Register code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -112,7 +265,38 @@ describe("Teacher get student code:", () => {
   });
 });
 
-describe("Student reg test:", () => {
+describe("Student reg wrong body:", () => {
+  sequentialTest("Reg:", async () => {
+    const payload = {
+      userName: STUDENT_NAME,
+      password: STUDENT_PASSWORD,
+    };
+    const res = await request(app)
+      .post("/api/v1/student/register")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student reg wrong special code:", () => {
+  sequentialTest("Reg:", async () => {
+    const payload = {
+      userName: STUDENT_NAME,
+      password: STUDENT_PASSWORD,
+      specialCode: STUDENT_CODE + "123",
+    };
+    const res = await request(app)
+      .post("/api/v1/student/register")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student reg:", () => {
   sequentialTest("Reg:", async () => {
     const payload = {
       userName: STUDENT_NAME,
@@ -128,8 +312,186 @@ describe("Student reg test:", () => {
   });
 });
 
-describe("Student delete:", () => {
+describe("Student wrong body:", () => {
+  sequentialTest("Login:", async () => {
+    const payload = {
+      userName: STUDENT_NAME,
+    };
+    const res = await request(app)
+      .post("/api/v1/student/login")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student login wrong username:", () => {
+  sequentialTest("Login:", async () => {
+    const payload = {
+      userName: STUDENT_NAME + "123",
+      password: STUDENT_PASSWORD,
+    };
+    const res = await request(app)
+      .post("/api/v1/student/login")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student login wrong password:", () => {
+  sequentialTest("Login:", async () => {
+    const payload = {
+      userName: STUDENT_NAME,
+      password: STUDENT_PASSWORD + "123",
+    };
+    const res = await request(app)
+      .post("/api/v1/student/login")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student login:", () => {
+  sequentialTest("Login:", async () => {
+    const payload = {
+      userName: STUDENT_NAME,
+      password: STUDENT_PASSWORD,
+    };
+    const res = await request(app)
+      .post("/api/v1/student/login")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("token");
+    STUDENT_TOKEN = res.body.token;
+  });
+});
+
+describe("Student validate token no token:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/student/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student validate token wrong token:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/student/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN} 123`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student validate token:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/student/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`);
+    expect(res.status).toEqual(200);
+  });
+});
+
+describe("Student delete wrong body:", () => {
   sequentialTest("Delete:", async () => {
+    const payload = {
+      student: STUDENT_NICKNAME,
+    };
+    const res = await request(app)
+      .delete("/api/v1/student/delete")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student delete no body:", () => {
+  sequentialTest("Delete:", async () => {
+    const res = await request(app)
+      .delete("/api/v1/student/delete")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student delete no JWT:", () => {
+  sequentialTest("Delete:", async () => {
+    const payload = {
+      studentName: STUDENT_NICKNAME,
+    };
+    const res = await request(app)
+      .delete("/api/v1/student/delete")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student delete wrong JWT:", () => {
+  sequentialTest("Delete:", async () => {
+    const payload = {
+      studentName: STUDENT_NICKNAME,
+    };
+    const res = await request(app)
+      .delete("/api/v1/student/delete")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN} test`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student delete no such student:", () => {
+  test("Delete:", async () => {
+    const payload = {
+      studentName: STUDENT_NICKNAME + "123",
+    };
+    const res = await request(app)
+      .delete("/api/v1/student/delete")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Student delete as student:", () => {
+  test("Delete:", async () => {
+    const payload = {
+      studentName: STUDENT_NICKNAME,
+    };
+    const res = await request(app)
+      .delete("/api/v1/student/delete")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`);
+    expect(res.status).toEqual(403);
+  });
+});
+
+describe("Student delete:", () => {
+  test("Delete:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -140,6 +502,17 @@ describe("Student delete:", () => {
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
     expect(res.status).toEqual(200);
+  });
+});
+
+describe("Student validate token no student:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/student/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`);
+    expect(res.status).toEqual(400);
   });
 });
 
@@ -201,7 +574,7 @@ describe("Teacher delete student code wrong no student:", () => {
 });
 
 describe("Teacher delete student code:", () => {
-  sequentialTest("Delete code:", async () => {
+  test("Delete code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -227,7 +600,17 @@ describe("Teacher delete test wrong JWT:", () => {
   });
 });
 
-describe("Teacher delete test:", () => {
+describe("Teacher delete no JWT:", () => {
+  test("Delete:", async () => {
+    const res = await request(app)
+      .delete("/api/v1/teacher/delete")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher delete:", () => {
   test("Delete:", async () => {
     const res = await request(app)
       .delete("/api/v1/teacher/delete")
@@ -235,6 +618,28 @@ describe("Teacher delete test:", () => {
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${TEACHER_TOKEN} `);
     expect(res.status).toEqual(200);
+  });
+});
+
+describe("Teacher delete again:", () => {
+  test("Delete:", async () => {
+    const res = await request(app)
+      .delete("/api/v1/teacher/delete")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN} `);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Teacher validate token no teacher:", () => {
+  sequentialTest("Validate:", async () => {
+    const res = await request(app)
+      .get("/api/v1/teacher/token")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
+    expect(res.status).toEqual(400);
   });
 });
 
