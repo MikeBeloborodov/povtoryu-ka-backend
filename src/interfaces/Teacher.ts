@@ -4,6 +4,12 @@ export interface TeacherRegBody {
   specialCode: string;
 }
 
+export interface TeacherRegistrationBody {
+  userName: string;
+  password: string;
+  specialCode: string;
+}
+
 export interface TeacherLoginBody {
   userName: string;
   password: string;

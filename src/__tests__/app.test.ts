@@ -33,7 +33,7 @@ const sequentialTest = (name: string, action: Function) => {
 //
 // teacher tests
 describe("Teacher reg wrong body:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const payload = {
       userName: TEACHER_NAME,
       specialCode: TEACHER_SPECIAL_CODE,
@@ -48,7 +48,7 @@ describe("Teacher reg wrong body:", () => {
 });
 
 describe("Teacher reg no body:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const res = await request(app)
       .post("/api/v1/teacher/register")
       .set("Content-Type", "application/json")
@@ -58,7 +58,7 @@ describe("Teacher reg no body:", () => {
 });
 
 describe("Teacher reg wrong code:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const payload = {
       userName: TEACHER_NAME,
       password: TEACHER_PASSWORD,
@@ -74,7 +74,7 @@ describe("Teacher reg wrong code:", () => {
 });
 
 describe("Teacher reg:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const payload = {
       userName: TEACHER_NAME,
       password: TEACHER_PASSWORD,
@@ -90,7 +90,7 @@ describe("Teacher reg:", () => {
 });
 
 describe("Teacher same data reg test:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const payload = {
       userName: TEACHER_NAME,
       password: TEACHER_PASSWORD,
@@ -106,7 +106,7 @@ describe("Teacher same data reg test:", () => {
 });
 
 describe("Teacher login test no payload:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const res = await request(app)
       .post("/api/v1/teacher/login")
       .set("Content-Type", "application/json")
@@ -116,7 +116,7 @@ describe("Teacher login test no payload:", () => {
 });
 
 describe("Teacher login test wrong payload:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: TEACHER_NAME,
     };
@@ -130,7 +130,7 @@ describe("Teacher login test wrong payload:", () => {
 });
 
 describe("Teacher login wrong pass:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: TEACHER_NAME,
       password: TEACHER_PASSWORD + "123",
@@ -145,7 +145,7 @@ describe("Teacher login wrong pass:", () => {
 });
 
 describe("Teacher login wrong login:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: TEACHER_NAME + "123",
       password: TEACHER_PASSWORD,
@@ -160,7 +160,7 @@ describe("Teacher login wrong login:", () => {
 });
 
 describe("Teacher login:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: TEACHER_NAME,
       password: TEACHER_PASSWORD,
@@ -177,7 +177,7 @@ describe("Teacher login:", () => {
 });
 
 describe("Teacher validate token wrong token:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/teacher/token")
       .set("Content-Type", "application/json")
@@ -188,7 +188,7 @@ describe("Teacher validate token wrong token:", () => {
 });
 
 describe("Teacher validate token no token:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/teacher/token")
       .set("Content-Type", "application/json")
@@ -198,7 +198,7 @@ describe("Teacher validate token no token:", () => {
 });
 
 describe("Teacher validate token:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/teacher/token")
       .set("Content-Type", "application/json")
@@ -209,7 +209,7 @@ describe("Teacher validate token:", () => {
 });
 
 describe("Teacher register student wrong body:", () => {
-  sequentialTest("Register code:", async () => {
+  test("Register code:", async () => {
     const res = await request(app)
       .post("/api/v1/student/code/new")
       .set("Content-Type", "application/json")
@@ -220,7 +220,7 @@ describe("Teacher register student wrong body:", () => {
 });
 
 describe("Teacher register student code wrong jwt:", () => {
-  sequentialTest("Register code:", async () => {
+  test("Register code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -235,7 +235,7 @@ describe("Teacher register student code wrong jwt:", () => {
 });
 
 describe("Teacher register student code no jwt:", () => {
-  sequentialTest("Register code:", async () => {
+  test("Register code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -249,7 +249,7 @@ describe("Teacher register student code no jwt:", () => {
 });
 
 describe("Teacher register student code:", () => {
-  sequentialTest("Register code:", async () => {
+  test("Register code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -266,7 +266,7 @@ describe("Teacher register student code:", () => {
 });
 
 describe("Student reg wrong body:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const payload = {
       userName: STUDENT_NAME,
       password: STUDENT_PASSWORD,
@@ -281,7 +281,7 @@ describe("Student reg wrong body:", () => {
 });
 
 describe("Student reg wrong special code:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const payload = {
       userName: STUDENT_NAME,
       password: STUDENT_PASSWORD,
@@ -297,7 +297,7 @@ describe("Student reg wrong special code:", () => {
 });
 
 describe("Student reg:", () => {
-  sequentialTest("Reg:", async () => {
+  test("Reg:", async () => {
     const payload = {
       userName: STUDENT_NAME,
       password: STUDENT_PASSWORD,
@@ -312,8 +312,24 @@ describe("Student reg:", () => {
   });
 });
 
+describe("Student reg same student data:", () => {
+  test("Reg:", async () => {
+    const payload = {
+      userName: STUDENT_NAME,
+      password: STUDENT_PASSWORD,
+      specialCode: STUDENT_CODE,
+    };
+    const res = await request(app)
+      .post("/api/v1/student/register")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(409);
+  });
+});
+
 describe("Student wrong body:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: STUDENT_NAME,
     };
@@ -327,7 +343,7 @@ describe("Student wrong body:", () => {
 });
 
 describe("Student login wrong username:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: STUDENT_NAME + "123",
       password: STUDENT_PASSWORD,
@@ -342,7 +358,7 @@ describe("Student login wrong username:", () => {
 });
 
 describe("Student login wrong password:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: STUDENT_NAME,
       password: STUDENT_PASSWORD + "123",
@@ -357,7 +373,7 @@ describe("Student login wrong password:", () => {
 });
 
 describe("Student login:", () => {
-  sequentialTest("Login:", async () => {
+  test("Login:", async () => {
     const payload = {
       userName: STUDENT_NAME,
       password: STUDENT_PASSWORD,
@@ -374,7 +390,7 @@ describe("Student login:", () => {
 });
 
 describe("Student validate token no token:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/student/token")
       .set("Content-Type", "application/json")
@@ -384,7 +400,7 @@ describe("Student validate token no token:", () => {
 });
 
 describe("Student validate token wrong token:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/student/token")
       .set("Content-Type", "application/json")
@@ -395,7 +411,7 @@ describe("Student validate token wrong token:", () => {
 });
 
 describe("Student validate token:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/student/token")
       .set("Content-Type", "application/json")
@@ -406,7 +422,7 @@ describe("Student validate token:", () => {
 });
 
 describe("Student delete wrong body:", () => {
-  sequentialTest("Delete:", async () => {
+  test("Delete:", async () => {
     const payload = {
       student: STUDENT_NICKNAME,
     };
@@ -421,7 +437,7 @@ describe("Student delete wrong body:", () => {
 });
 
 describe("Student delete no body:", () => {
-  sequentialTest("Delete:", async () => {
+  test("Delete:", async () => {
     const res = await request(app)
       .delete("/api/v1/student/delete")
       .set("Content-Type", "application/json")
@@ -432,7 +448,7 @@ describe("Student delete no body:", () => {
 });
 
 describe("Student delete no JWT:", () => {
-  sequentialTest("Delete:", async () => {
+  test("Delete:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -446,7 +462,7 @@ describe("Student delete no JWT:", () => {
 });
 
 describe("Student delete wrong JWT:", () => {
-  sequentialTest("Delete:", async () => {
+  test("Delete:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -506,7 +522,7 @@ describe("Student delete:", () => {
 });
 
 describe("Student validate token no student:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/student/token")
       .set("Content-Type", "application/json")
@@ -517,7 +533,7 @@ describe("Student validate token no student:", () => {
 });
 
 describe("Teacher delete student code wrong JWT:", () => {
-  sequentialTest("Delete code:", async () => {
+  test("Delete code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -532,7 +548,7 @@ describe("Teacher delete student code wrong JWT:", () => {
 });
 
 describe("Teacher delete student code no JWT:", () => {
-  sequentialTest("Delete code:", async () => {
+  test("Delete code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME,
     };
@@ -546,7 +562,7 @@ describe("Teacher delete student code no JWT:", () => {
 });
 
 describe("Teacher delete student code wrong student:", () => {
-  sequentialTest("Delete code:", async () => {
+  test("Delete code:", async () => {
     const payload = {
       studentName: STUDENT_NICKNAME + "test",
     };
@@ -561,7 +577,7 @@ describe("Teacher delete student code wrong student:", () => {
 });
 
 describe("Teacher delete student code wrong no student:", () => {
-  sequentialTest("Delete code:", async () => {
+  test("Delete code:", async () => {
     const payload = {};
     const res = await request(app)
       .delete("/api/v1/student/code/delete")
@@ -590,7 +606,7 @@ describe("Teacher delete student code:", () => {
 
 // delete teacher
 describe("Teacher delete test wrong JWT:", () => {
-  sequentialTest("Delete:", async () => {
+  test("Delete:", async () => {
     const res = await request(app)
       .delete("/api/v1/teacher/delete")
       .set("Content-Type", "application/json")
@@ -633,7 +649,7 @@ describe("Teacher delete again:", () => {
 });
 
 describe("Teacher validate token no teacher:", () => {
-  sequentialTest("Validate:", async () => {
+  test("Validate:", async () => {
     const res = await request(app)
       .get("/api/v1/teacher/token")
       .set("Content-Type", "application/json")

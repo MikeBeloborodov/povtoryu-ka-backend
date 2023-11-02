@@ -2,7 +2,7 @@ import { getStudentsData } from "../db/bin/getStudentsData";
 import { validateTokenHeader } from "../bin/validateTokenHeader";
 import { validateRequestBody } from "../bin/validateRequestBody";
 import express from "express";
-import { veiryJWToken } from "../bin/utils";
+import { verifyJWT } from "../bin/utils";
 import { JWToken } from "../interfaces/Token";
 
 export const returnStudentsDataHandler = async (
@@ -23,10 +23,7 @@ export const returnStudentsDataHandler = async (
 
   // validate teacher token
   try {
-    JWToken = veiryJWToken(
-      validatedData.token,
-      process.env.SECRET_TOKEN_KEY,
-    ) as JWToken;
+    JWToken = verifyJWT(validatedData.token) as JWToken;
   } catch (verificationError) {
     return res.status(400).send({ error: "Wrong JWT." });
   }

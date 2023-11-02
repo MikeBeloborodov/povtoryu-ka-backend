@@ -17,6 +17,12 @@ export interface StudentRegRequestBody {
   specialCode: string;
 }
 
+export interface StudentRegistrationRequestBody {
+  userName: string;
+  password: string;
+  specialCode: string;
+}
+
 export interface StudentDeleteRequestBody {
   studentName: string;
 }

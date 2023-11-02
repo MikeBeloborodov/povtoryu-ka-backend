@@ -1,39 +1,34 @@
 import express from "express";
-import { validateStudentRegBody } from "../bin/validateStudentRegBody";
-import { validateRequestBody } from "../bin/validateRequestBody";
 import { validateSpecialCode } from "../db/bin/validateSpecialCode";
 import { saveStudent } from "../db/bin/saveStudent";
+import { validateRequest } from "../bin/validateRequest";
+import { validateBody } from "../bin/validateBody";
+import { StudentRegistrationClass } from "../classes/Student";
+import { checkForDuplication } from "../db/bin/checkForDuplication";
+import { handleErrors } from "../bin/handleErrors";
 
 export const registerStudentHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  let validatedData;
-
-  // validate req body
   try {
-    validatedData = await validateRequestBody(req, validateStudentRegBody);
-  } catch (validationError) {
-    return res
-      .status(400)
-      .send({ error: "Wrong request body", error_message: validationError });
-  }
+    // validate request
+    await validateRequest({
+      req: req,
+      bodyClass: StudentRegistrationClass,
+      validateBody: validateBody,
+      checkForDuplication: checkForDuplication,
+      validateSpecialCode: validateSpecialCode,
+      role: "student",
+    });
 
-  // validate special code
-  try {
-    if (!(await validateSpecialCode(validatedData.specialCode, "student"))) {
-      return res.status(400).send({ error: "Wrong special code." });
-    }
-  } catch (dbError) {
-    return res.status(500).send({ error: "Error with DB. Call admin." });
-  }
+    // save new student
+    await saveStudent(req);
 
-  // save a user to DB
-  try {
-    await saveStudent(validatedData);
+    return res.status(201).send({ message: "Student registered." });
+
+    // error handling
   } catch (error) {
-    return res.status(500).send({ error: "Error with DB. Call admin." });
+    handleErrors(res, error);
   }
-
-  return res.status(201).send({ message: "Student registered." });
 };

@@ -1,9 +1,9 @@
 import express from "express";
-import { validateRequestBody } from "../bin/validateRequestBody";
+import { validateRequest } from "../bin/validateRequest";
 import { validateTokenHeader } from "../bin/validateTokenHeader";
-import { veiryJWToken } from "../bin/utils";
-import { returnTeacher } from "../db/bin/returnTeacher";
-import { JWToken } from "interfaces/Token";
+import { validateJWT } from "../bin/validateJWT";
+import { validateInDB } from "../db/bin/validateInDB";
+import { handleErrors } from "../bin/handleErrors";
 
 require("dotenv").config();
 
@@ -11,36 +11,20 @@ export const validateTeacherTokenHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  let validatedData;
-  let JWToken;
-  // validate req body
   try {
-    validatedData = await validateRequestBody(req, validateTokenHeader);
-  } catch (validationErrors) {
-    return res
-      .status(400)
-      .send({ error: "Wrong request body", error_message: validationErrors });
-  }
+    // validate request
+    await validateRequest({
+      req: req,
+      validateHeaders: validateTokenHeader,
+      validateJWT: validateJWT,
+      validateInDB: validateInDB,
+      role: "teacher",
+    });
 
-  // verify jwt
-  try {
-    JWToken = veiryJWToken(
-      validatedData.token,
-      process.env.SECRET_TOKEN_KEY,
-    ) as JWToken;
-  } catch (verificationError) {
-    return res.status(400).send({ error: "Wrong JWT." });
-  }
+    return res.status(200).send({ message: "Token is valid" });
 
-  // search teacher in database
-  try {
-    const teacher = await returnTeacher(JWToken.userName);
-    if (teacher) {
-      return res.status(200).send({ message: "Verified token." });
-    } else {
-      res.status(400).send({ error: "No teacher registred with this JWT." });
-    }
-  } catch (dbError) {
-    return res.status(500).send({ error: "Error with DB. Call admin." });
+    // error handling
+  } catch (error) {
+    handleErrors(res, error);
   }
 };

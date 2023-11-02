@@ -1,15 +1,19 @@
-import { Teacher as TeacherModel } from "../ormModels/Teacher";
-import { TeacherRegInfo } from "../../classes/Teacher";
 import bcrypt from "bcrypt";
+import express from "express";
+import { Teacher as TeacherModel } from "../ormModels/Teacher";
+import { DBError } from "../../classes/Errors";
 
-export const saveTeacher = async (data: TeacherRegInfo) => {
+export const saveTeacher = async (req: express.Request) => {
   const saltRounds = 10;
-  const hash = bcrypt.hashSync(data.password, saltRounds);
-  if (!hash) throw "Hashing error";
+  const hash = bcrypt.hashSync(req.body.password, saltRounds);
   const teacher = TeacherModel.build({
-    userName: data.userName,
+    userName: req.body.userName,
     password: hash,
     role: "teacher",
   });
-  await teacher.save();
+  try {
+    await teacher.save();
+  } catch (error) {
+    throw new DBError();
+  }
 };

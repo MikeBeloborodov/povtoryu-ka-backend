@@ -1,54 +1,36 @@
 import express from "express";
-import { validateNewStudentCode } from "../bin/validateNewStudentCode";
-import { saveNewStudentCode } from "../db/bin/saveNewStudentCode";
-import { validateRequestBody } from "../bin/validateRequestBody";
-import { veiryJWToken } from "../bin/utils";
-import { JWToken } from "../interfaces/Token";
 import { validateTokenHeader } from "../bin/validateTokenHeader";
+import { validateRequest } from "../bin/validateRequest";
+import { NewStudentCodeRegistrationClass } from "../classes/Student";
+import { validateBody } from "../bin/validateBody";
+import { validateJWT } from "../bin/validateJWT";
+import { saveNewStudentCode } from "../db/bin/saveNewStudentCode";
+import { handleErrors } from "../bin/handleErrors";
+import { validateInDB } from "../db/bin/validateInDB";
 
 export const registerNewStudentCodeHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  // validate req body
-  let validatedData;
-  let tokenRaw;
-  let verifiedToken;
   try {
-    validatedData = await validateRequestBody(req, validateNewStudentCode);
-  } catch (validationError) {
-    console.log(validationError);
-    return res.status(400).send({
-      error: "Wrong request body.",
-      error_message: validationError,
+    // validate request
+    await validateRequest({
+      req: req,
+      bodyClass: NewStudentCodeRegistrationClass,
+      validateBody: validateBody,
+      validateHeaders: validateTokenHeader,
+      validateJWT: validateJWT,
+      validateInDB: validateInDB,
+      role: "teacher",
     });
-  }
 
-  // validate req header
-  try {
-    tokenRaw = await validateTokenHeader(req);
-  } catch (validationError) {
-    return res.status(400).send({ error: "No JWT provided." });
-  }
+    // save student code
+    const studentCode = await saveNewStudentCode(req);
 
-  // verify teacher token
-  try {
-    verifiedToken = veiryJWToken(
-      tokenRaw.token,
-      process.env.SECRET_TOKEN_KEY,
-    ) as JWToken;
-  } catch (verificationError) {
-    return res.status(400).send({ error: "Wrong JWT." });
-  }
+    return res.status(201).send(studentCode);
 
-  // save new student code
-  try {
-    const newStudentCode = await saveNewStudentCode(
-      verifiedToken.userName,
-      validatedData.studentName,
-    );
-    return res.status(201).send(newStudentCode);
-  } catch (db_error) {
-    return res.status(500).send({ error: "Error with DB. Call admin." });
+    // error handling
+  } catch (error) {
+    handleErrors(res, error);
   }
 };

@@ -1,6 +1,6 @@
 import express from "express";
 import { JWToken } from "../interfaces/Token";
-import { veiryJWToken } from "../bin/utils";
+import { verifyJWT } from "../bin/utils";
 import { validateRequestBody } from "../bin/validateRequestBody";
 import { validateTokenHeader } from "../bin/validateTokenHeader";
 import { deleteTeacher } from "../db/bin/deleteTeacher";
@@ -22,10 +22,7 @@ export const deleteTeacherHandler = async (
 
   // validate teacher token
   try {
-    JWToken = veiryJWToken(
-      validatedData.token,
-      process.env.SECRET_TOKEN_KEY,
-    ) as JWToken;
+    JWToken = verifyJWT(validatedData.token) as JWToken;
   } catch (verificationError) {
     return res.status(400).send({ error: "Wrong JWT." });
   }

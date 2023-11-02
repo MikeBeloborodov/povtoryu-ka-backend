@@ -1,15 +1,34 @@
+import express from "express";
 import { StudentCode } from "../ormModels/StudentCode";
 import { TeacherCode } from "../ormModels/TeacherCode";
+import { DBError, SpecialCodeValidationError } from "../../classes/Errors";
 
-export const validateSpecialCode = async (code: string, entity: string) => {
-  switch (entity) {
+export const validateSpecialCode = async (
+  req: express.Request,
+  role: string,
+) => {
+  switch (role) {
     case "teacher":
-      const teacherCode = await TeacherCode.findOne({ where: { code: code } });
-      if (!teacherCode) return false;
-      return true;
+      let teacherCode;
+      try {
+        teacherCode = await TeacherCode.findOne({
+          where: { code: req.body.specialCode },
+        });
+      } catch (error) {
+        throw new DBError();
+      }
+      if (!teacherCode) throw new SpecialCodeValidationError();
+      break;
     case "student":
-      const studentCode = await StudentCode.findOne({ where: { code: code } });
-      if (!studentCode) return false;
-      return true;
+      let studentCode;
+      try {
+        studentCode = await StudentCode.findOne({
+          where: { code: req.body.specialCode },
+        });
+      } catch (error) {
+        throw new DBError();
+      }
+      if (!studentCode) throw new SpecialCodeValidationError();
+      break;
   }
 };
