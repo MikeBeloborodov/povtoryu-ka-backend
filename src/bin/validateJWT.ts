@@ -1,6 +1,5 @@
 import express from "express";
 import { verifyJWT } from "../bin/utils";
-import { JWTValidationError } from "../classes/Errors";
 
 require("dotenv").config();
 

@@ -69,3 +69,35 @@ export class NoStudentCodeError extends Error {
     this.name = "NoStudentCodeError";
   }
 }
+
+export class NoTeacherFoundError extends Error {
+  constructor() {
+    super();
+    this.message = "No teacher with these credentials found in the DB.";
+    this.name = "NoTeacherFoundError";
+  }
+}
+
+export class WrongPasswordError extends Error {
+  constructor() {
+    super();
+    this.message = "Wrong password.";
+    this.name = "WrongPasswordError";
+  }
+}
+
+export class NoStudentFoundError extends Error {
+  constructor() {
+    super();
+    this.message = "No student with these credentials found in the DB.";
+    this.name = "NoStudentFoundError";
+  }
+}
+
+export class JWTInBlackListError extends Error {
+  constructor() {
+    super();
+    this.message = "Your JWT is in the blacklist. Login again.";
+    this.name = "JWTInBlackListError";
+  }
+}

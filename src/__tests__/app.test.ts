@@ -644,7 +644,7 @@ describe("Teacher delete again:", () => {
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${TEACHER_TOKEN} `);
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(403);
   });
 });
 
@@ -655,7 +655,7 @@ describe("Teacher validate token no teacher:", () => {
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(403);
   });
 });
 

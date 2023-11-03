@@ -9,6 +9,8 @@ export interface ValidateParameters {
   validateRole?: Function;
   validateJWT?: Function;
   validateSpecialCode?: Function;
+  requiredRole?: string;
   role?: string;
   checkForDuplication?: Function;
+  checkJWTBlackList?: Function;
 }

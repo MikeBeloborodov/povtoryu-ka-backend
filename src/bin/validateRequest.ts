@@ -10,7 +10,9 @@ export const validateRequest = async ({
   validateJWT = null,
   validateSpecialCode = null,
   role = null,
+  requiredRole = null,
   checkForDuplication = null,
+  checkJWTBlackList = null,
 }: ValidateParameters) => {
   if (validateBody) {
     await validateBody(req, bodyClass);
@@ -18,19 +20,22 @@ export const validateRequest = async ({
   if (validateHeaders) {
     await validateHeaders(req);
   }
+  if (checkJWTBlackList) {
+    await checkJWTBlackList(req);
+  }
+  if (validateJWT) {
+    validateJWT(req);
+  }
   if (validateRole) {
-    await validateRole(req);
+    await validateRole(req, requiredRole);
+  }
+  if (validateInDB) {
+    await validateInDB(req);
   }
   if (validateSpecialCode) {
     await validateSpecialCode(req, role);
   }
   if (checkForDuplication) {
     await checkForDuplication(req, role);
-  }
-  if (validateJWT) {
-    validateJWT(req);
-  }
-  if (validateInDB) {
-    await validateInDB(req);
   }
 };

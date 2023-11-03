@@ -40,6 +40,18 @@ export class StudentLoginInfo {
   }
 }
 
+export class StudentLoginClass {
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
+  password: string;
+
+  constructor({ userName, password }: StudentLoginRequestBody) {
+    (this.userName = userName), (this.password = password);
+  }
+}
+
 export class NewStudentCodeInfo {
   @IsNotEmpty()
   studentName: string;
@@ -111,6 +123,15 @@ export class StudentRegistrationClass {
 }
 
 export class StudentDeleteInfo {
+  @IsNotEmpty()
+  studentName: string;
+
+  constructor({ studentName }: StudentDeleteRequestBody) {
+    this.studentName = studentName;
+  }
+}
+
+export class StudentDeleteClass {
   @IsNotEmpty()
   studentName: string;
 

@@ -71,3 +71,16 @@ export class TeacherLoginInfo {
     this.password = password;
   }
 }
+
+export class TeacherLoginClass {
+  @IsNotEmpty()
+  userName: string;
+
+  @IsNotEmpty()
+  password: string;
+
+  constructor({ userName, password }: TeacherLoginBody) {
+    this.userName = userName;
+    this.password = password;
+  }
+}
