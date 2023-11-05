@@ -1,42 +1,34 @@
 import { getStudentsData } from "../db/bin/getStudentsData";
 import { validateTokenHeader } from "../bin/validateTokenHeader";
-import { validateRequestBody } from "../bin/validateRequestBody";
 import express from "express";
-import { verifyJWT } from "../bin/utils";
-import { JWToken } from "../interfaces/Token";
+import { validateRequest } from "../bin/validateRequest";
+import { validateJWT } from "../bin/validateJWT";
+import { validateInDB } from "../db/bin/validateInDB";
+import { checkJWTBlackList } from "../bin/checkJWTBlackList";
+import { handleErrors } from "../bin/handleErrors";
 
 export const returnStudentsDataHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
-  let validatedData;
-  let JWToken: JWToken;
-
-  // validate req body
   try {
-    validatedData = await validateRequestBody(req, validateTokenHeader);
-  } catch (validationErrors) {
-    return res
-      .status(400)
-      .send({ error: "Wrong request body", error_message: validationErrors });
-  }
+    // validate request
+    await validateRequest({
+      req: req,
+      validateHeaders: validateTokenHeader,
+      validateJWT: validateJWT,
+      validateInDB: validateInDB,
+      checkJWTBlackList: checkJWTBlackList,
+      role: "teacher",
+    });
 
-  // validate teacher token
-  try {
-    JWToken = verifyJWT(validatedData.token) as JWToken;
-  } catch (verificationError) {
-    return res.status(400).send({ error: "Wrong JWT." });
-  }
+    // get students data from db
+    const studentsData = await getStudentsData(req);
 
-  //send users data
-  try {
-    const studentsData = await getStudentsData(JWToken.userName);
-    if (studentsData) {
-      return res.status(200).send(studentsData);
-    } else {
-      return res.status(404).send({ error: "No students found." });
-    }
-  } catch (db_error) {
-    return res.status(500).send({ error: "Error with DB. Call admin." });
+    return res.status(200).send({ studentsData: studentsData });
+
+    // error handling
+  } catch (error) {
+    handleErrors(res, error);
   }
 };

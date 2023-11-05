@@ -532,6 +532,29 @@ describe("Student validate token no student:", () => {
   });
 });
 
+describe("Get students data wrong JWT", () => {
+  test("Get:", async () => {
+    const res = await request(app)
+      .get("/api/v1/students")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN} test`);
+    expect(res.status).toEqual(400);
+  });
+});
+
+describe("Get students data", () => {
+  test("Get:", async () => {
+    const res = await request(app)
+      .get("/api/v1/students")
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("studentsData");
+  });
+});
+
 describe("Teacher delete student code wrong JWT:", () => {
   test("Delete code:", async () => {
     const payload = {

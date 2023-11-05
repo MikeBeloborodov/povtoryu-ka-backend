@@ -12,16 +12,12 @@ export const deleteStudentCode = async (req: express.Request) => {
       where: { teacherId: token.id, nickname: req.body.studentName },
     });
   } catch (error) {
-    console.log(error);
     throw new DBError();
   }
-  console.log(token.id);
-  console.log(req.body.studentName);
   if (!code) throw new NoStudentCodeError();
   try {
     await code.destroy();
   } catch (error) {
-    console.log(error);
     throw new DBError();
   }
 };

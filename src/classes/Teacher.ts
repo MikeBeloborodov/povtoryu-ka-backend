@@ -25,23 +25,6 @@ export class Teacher {
   role: string;
 }
 
-export class TeacherRegInfo {
-  @IsNotEmpty()
-  userName: string;
-
-  @IsNotEmpty()
-  password: string;
-
-  @IsNotEmpty()
-  specialCode: string;
-
-  constructor({ userName, password, specialCode }: TeacherRegBody) {
-    this.userName = userName;
-    this.password = password;
-    this.specialCode = specialCode;
-  }
-}
-
 export class TeacherRegistrationClass {
   @IsNotEmpty()
   userName: string;
@@ -56,19 +39,6 @@ export class TeacherRegistrationClass {
     this.userName = userName;
     this.password = password;
     this.specialCode = specialCode;
-  }
-}
-
-export class TeacherLoginInfo {
-  @IsNotEmpty()
-  userName: string;
-
-  @IsNotEmpty()
-  password: string;
-
-  constructor({ userName, password }: TeacherLoginBody) {
-    this.userName = userName;
-    this.password = password;
   }
 }
 
