@@ -6,3 +6,16 @@ export interface NewCardRequestBody {
   teacherId: number;
   studentId: number;
 }
+
+export interface NewWordCardRequestBody {
+  category: string;
+  theme: string;
+  partOfSpeech: string;
+  word: string;
+  definition: string;
+  images: string[];
+  sentences: string[];
+  translations: string[];
+  teacherId: number;
+  studentId: number;
+}

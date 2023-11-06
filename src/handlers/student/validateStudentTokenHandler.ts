@@ -1,10 +1,10 @@
 import express from "express";
-import { validateTokenHeader } from "../bin/validateTokenHeader";
-import { validateRequest } from "../bin/validateRequest";
-import { validateJWT } from "../bin/validateJWT";
-import { validateInDB } from "../db/bin/validateInDB";
-import { handleErrors } from "../bin/handleErrors";
-import { checkJWTBlackList } from "../bin/checkJWTBlackList";
+import { validateTokenHeader } from "../../bin/validateTokenHeader";
+import { validateRequest } from "../../bin/validateRequest";
+import { validateJWT } from "../../bin/validateJWT";
+import { validateInDB } from "../../db/bin/validateInDB";
+import { handleErrors } from "../../bin/handleErrors";
+import { checkJWTBlackList } from "../../bin/checkJWTBlackList";
 
 require("dotenv").config();
 

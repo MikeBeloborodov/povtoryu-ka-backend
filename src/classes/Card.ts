@@ -1,18 +1,24 @@
 import { IsNotEmpty } from "class-validator";
-import { NewCardRequestBody } from "../interfaces/Card";
+import { NewWordCardRequestBody } from "../interfaces/Card";
 
-export class NewCardInfo {
-  @IsNotEmpty()
-  category: string;
-
-  @IsNotEmpty()
-  theme: string;
-
+export class NewWordCardClass {
   @IsNotEmpty()
   partOfSpeech: string;
 
   @IsNotEmpty()
   word: string;
+
+  @IsNotEmpty()
+  definition: string;
+
+  @IsNotEmpty()
+  translations: string[];
+
+  @IsNotEmpty()
+  sentences: string[];
+
+  @IsNotEmpty()
+  images: string[];
 
   @IsNotEmpty()
   teacherId: number;
@@ -21,18 +27,22 @@ export class NewCardInfo {
   studentId: number;
 
   constructor({
-    category,
-    theme,
     partOfSpeech,
+    sentences,
+    images,
+    translations,
+    definition,
     word,
     teacherId,
     studentId,
-  }: NewCardRequestBody) {
-    this.category = category;
+  }: NewWordCardRequestBody) {
     this.partOfSpeech = partOfSpeech;
-    this.theme = theme;
     this.word = word;
     this.teacherId = teacherId;
     this.studentId = studentId;
+    this.sentences = sentences;
+    this.images = images;
+    this.translations = translations;
+    this.definition = definition;
   }
 }

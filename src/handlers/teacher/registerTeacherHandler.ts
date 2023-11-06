@@ -1,11 +1,11 @@
 import express from "express";
-import { saveTeacher } from "../db/bin/saveTeacher";
-import { validateSpecialCode } from "../db/bin/validateSpecialCode";
-import { validateRequest } from "../bin/validateRequest";
-import { validateBody } from "../bin/validateBody";
-import { TeacherRegistrationClass } from "../classes/Teacher";
-import { checkForDuplication } from "../db/bin/checkForDuplication";
-import { handleErrors } from "../bin/handleErrors";
+import { saveTeacher } from "../../db/bin/saveTeacher";
+import { validateSpecialCode } from "../../db/bin/validateSpecialCode";
+import { validateRequest } from "../../bin/validateRequest";
+import { validateBody } from "../../bin/validateBody";
+import { TeacherRegistrationClass } from "../../classes/Teacher";
+import { checkForDuplication } from "../../db/bin/checkForDuplication";
+import { handleErrors } from "../../bin/handleErrors";
 
 export const registerTeacherHandler = async (
   req: express.Request,

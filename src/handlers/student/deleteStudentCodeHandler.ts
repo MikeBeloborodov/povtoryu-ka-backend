@@ -1,12 +1,12 @@
 import express from "express";
-import { deleteStudentCode } from "../db/bin/deleteStudentCode";
-import { validateTokenHeader } from "../bin/validateTokenHeader";
-import { validateRequest } from "../bin/validateRequest";
-import { DeleteStudentCodeClass } from "../classes/Student";
-import { validateBody } from "../bin/validateBody";
-import { validateJWT } from "../bin/validateJWT";
-import { handleErrors } from "../bin/handleErrors";
-import { validateInDB } from "../db/bin/validateInDB";
+import { deleteStudentCode } from "../../db/bin/deleteStudentCode";
+import { validateTokenHeader } from "../../bin/validateTokenHeader";
+import { validateRequest } from "../../bin/validateRequest";
+import { DeleteStudentCodeClass } from "../../classes/Student";
+import { validateBody } from "../../bin/validateBody";
+import { validateJWT } from "../../bin/validateJWT";
+import { handleErrors } from "../../bin/handleErrors";
+import { validateInDB } from "../../db/bin/validateInDB";
 
 export const deleteStudentCodeHandler = async (
   req: express.Request,

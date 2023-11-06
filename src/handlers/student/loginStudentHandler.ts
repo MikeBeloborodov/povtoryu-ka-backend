@@ -1,9 +1,9 @@
 import express from "express";
-import { loginStudent } from "../db/bin/loginStudent";
-import { validateRequest } from "../bin/validateRequest";
-import { validateBody } from "../bin/validateBody";
-import { StudentLoginClass } from "../classes/Student";
-import { handleErrors } from "../bin/handleErrors";
+import { loginStudent } from "../../db/bin/loginStudent";
+import { validateRequest } from "../../bin/validateRequest";
+import { validateBody } from "../../bin/validateBody";
+import { StudentLoginClass } from "../../classes/Student";
+import { handleErrors } from "../../bin/handleErrors";
 
 export const loginStudentHandler = async (
   req: express.Request,

@@ -1,7 +1,7 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize as seq } from "../db";
 
-export const Card = seq.define("Card", {
+export const WordCard = seq.define("WordCard", {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER,
@@ -24,12 +24,6 @@ export const Card = seq.define("Card", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  theme: {
-    type: DataTypes.STRING,
-  },
-  category: {
-    type: DataTypes.STRING,
-  },
   audio: {
     type: DataTypes.STRING,
   },
@@ -44,5 +38,25 @@ export const Card = seq.define("Card", {
   updatedAt: {
     type: DataTypes.DATE,
     allowNull: false,
+  },
+  teacherId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: {
+        tableName: "Teachers",
+      },
+      key: "id",
+    },
+  },
+  studentId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: {
+        tableName: "Students",
+      },
+      key: "id",
+    },
   },
 });
