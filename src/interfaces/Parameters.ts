@@ -12,5 +12,4 @@ export interface ValidateParameters {
   requiredRole?: string;
   role?: string;
   checkForDuplication?: Function;
-  checkJWTBlackList?: Function;
 }

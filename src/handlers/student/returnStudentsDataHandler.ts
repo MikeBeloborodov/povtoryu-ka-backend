@@ -4,8 +4,8 @@ import express from "express";
 import { validateRequest } from "../../bin/validateRequest";
 import { validateJWT } from "../../bin/validateJWT";
 import { validateInDB } from "../../db/bin/validateInDB";
-import { checkJWTBlackList } from "../../bin/checkJWTBlackList";
 import { handleErrors } from "../../bin/handleErrors";
+import { validateRole } from "../../bin/validateRole";
 
 export const returnStudentsDataHandler = async (
   req: express.Request,
@@ -18,7 +18,8 @@ export const returnStudentsDataHandler = async (
       validateHeaders: validateTokenHeader,
       validateJWT: validateJWT,
       validateInDB: validateInDB,
-      checkJWTBlackList: checkJWTBlackList,
+      validateRole: validateRole,
+      requiredRole: "teacher",
       role: "teacher",
     });
 

@@ -15,7 +15,6 @@ export const loginStudentHandler = async (
       req: req,
       validateBody: validateBody,
       bodyClass: StudentLoginClass,
-      role: "student",
     });
 
     // login student and create a JWT

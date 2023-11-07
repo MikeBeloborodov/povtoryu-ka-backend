@@ -20,12 +20,7 @@ import { createWordCardHandler } from "./handlers/cards/createWordCardHandler";
 require("dotenv").config();
 
 // db connection
-try {
-  sequelize.authenticate();
-} catch (error) {
-  console.log("Unable to connect to DB.");
-  console.log(error);
-}
+sequelize.authenticate();
 
 const app = express();
 const port = 8080;

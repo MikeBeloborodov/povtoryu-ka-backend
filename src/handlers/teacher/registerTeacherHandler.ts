@@ -23,9 +23,9 @@ export const registerTeacherHandler = async (
     });
 
     // save new teacher
-    await saveTeacher(req);
+    const teacherData = await saveTeacher(req);
 
-    return res.status(201).send({ message: "Teacher registered." });
+    return res.status(201).send(teacherData);
     // error handling
   } catch (error) {
     handleErrors(res, error);

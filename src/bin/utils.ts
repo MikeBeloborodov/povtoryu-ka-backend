@@ -24,7 +24,3 @@ export const returnDecodedJWT = (req: express.Request) => {
   const decoded = jwt.verify(token, process.env.SECRET_TOKEN_KEY);
   return decoded;
 };
-
-export const returnRawJWT = (req: express.Request) => {
-  return req.header("Authorization")?.replace("Bearer ", "");
-};

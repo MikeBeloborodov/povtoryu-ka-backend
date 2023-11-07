@@ -2,12 +2,22 @@ import express from "express";
 import { WordCard } from "../../ormModels/WordCard";
 import { NewWordCardRequestBody } from "../../../interfaces/Card";
 import { Sentence } from "../../ormModels/Sentence";
-import { DBError } from "../../../classes/Errors";
+import {
+  DBError,
+  NoStudentFoundError,
+  NoTeacherFoundError,
+} from "../../../classes/Errors";
 import { Translation } from "../../ormModels/Translation";
 import { Image } from "../../ormModels/Image";
+import { Teacher } from "../../ormModels/Teacher";
+import { Student } from "../../ormModels/Student";
 
 export const saveWordCard = async (req: express.Request) => {
   const requestBody = req.body as NewWordCardRequestBody;
+  if (!(await Teacher.findOne({ where: { id: requestBody.teacherId } })))
+    throw new NoTeacherFoundError();
+  if (!(await Student.findOne({ where: { id: requestBody.studentId } })))
+    throw new NoStudentFoundError();
   try {
     let partOfSpeechRu;
     switch (requestBody.partOfSpeech) {
@@ -19,6 +29,9 @@ export const saveWordCard = async (req: express.Request) => {
         break;
       case "adjective":
         partOfSpeechRu = "прилагательное";
+        break;
+      default:
+        partOfSpeechRu = "не указана";
         break;
     }
     const card = WordCard.build({

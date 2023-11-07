@@ -12,7 +12,7 @@ export const saveTeacher = async (req: express.Request) => {
     role: "teacher",
   });
   try {
-    await teacher.save();
+    return await teacher.save();
   } catch (error) {
     throw new DBError();
   }

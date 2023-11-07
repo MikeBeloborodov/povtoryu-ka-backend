@@ -10,7 +10,7 @@ export const saveStudent = async (req: express.Request) => {
   const studentCode: any = await StudentCode.findOne({
     where: { code: req.body.specialCode },
   });
-  const user = StudentModel.build({
+  const student = StudentModel.build({
     userName: req.body.userName,
     password: hash,
     teacherId: studentCode.teacherId,
@@ -19,8 +19,11 @@ export const saveStudent = async (req: express.Request) => {
     role: "student",
   });
   try {
-    await user.save();
+    const studentRes = await student.save();
+    await studentCode.destroy();
+    return studentRes;
   } catch (error) {
+    console.log(error);
     throw new DBError();
   }
 };

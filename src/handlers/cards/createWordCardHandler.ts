@@ -5,7 +5,6 @@ import { validateRequest } from "../../bin/validateRequest";
 import { validateJWT } from "../../bin/validateJWT";
 import { validateRole } from "../../bin/validateRole";
 import { validateInDB } from "../../db/bin/validateInDB";
-import { checkJWTBlackList } from "../../bin/checkJWTBlackList";
 import { validateBody } from "../../bin/validateBody";
 import { NewWordCardClass } from "../../classes/Card";
 import { saveWordCard } from "../../db/bin/cards/saveWordCard";
@@ -22,7 +21,6 @@ export const createWordCardHandler = async (
       validateBody: validateBody,
       validateInDB: validateInDB,
       bodyClass: NewWordCardClass,
-      checkJWTBlackList: checkJWTBlackList,
       validateRole: validateRole,
       role: "teacher",
       requiredRole: "teacher",

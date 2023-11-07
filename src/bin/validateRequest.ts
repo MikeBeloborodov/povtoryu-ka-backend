@@ -12,16 +12,12 @@ export const validateRequest = async ({
   role = null,
   requiredRole = null,
   checkForDuplication = null,
-  checkJWTBlackList = null,
 }: ValidateParameters) => {
   if (validateBody) {
     await validateBody(req, bodyClass);
   }
   if (validateHeaders) {
     await validateHeaders(req);
-  }
-  if (checkJWTBlackList) {
-    await checkJWTBlackList(req);
   }
   if (validateJWT) {
     validateJWT(req);

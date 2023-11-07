@@ -33,7 +33,7 @@ export class DBError extends Error {
 export class RoleRequirementError extends Error {
   constructor() {
     super();
-    this.message = "Wrong role for this acrion.";
+    this.message = "Wrong role for this action.";
     this.name = "RoleRequirementError";
   }
 }
@@ -91,13 +91,5 @@ export class NoStudentFoundError extends Error {
     super();
     this.message = "No student with these credentials found in the DB.";
     this.name = "NoStudentFoundError";
-  }
-}
-
-export class JWTInBlackListError extends Error {
-  constructor() {
-    super();
-    this.message = "Your JWT is in the blacklist. Login again.";
-    this.name = "JWTInBlackListError";
   }
 }

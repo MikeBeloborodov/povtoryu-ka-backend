@@ -1,7 +1,11 @@
 import { JWToken } from "../../interfaces/Token";
 import { Teacher } from "../ormModels/Teacher";
 import { Student } from "../ormModels/Student";
-import { DBError, JWTValidationError } from "../../classes/Errors";
+import {
+  DBError,
+  NoStudentFoundError,
+  NoTeacherFoundError,
+} from "../../classes/Errors";
 import { returnDecodedJWT } from "../../bin/utils";
 import express from "express";
 
@@ -19,7 +23,7 @@ export const validateInDB = async (req: express.Request) => {
       } catch (error) {
         throw new DBError();
       }
-      if (!teacher) throw new JWTValidationError();
+      if (!teacher) throw new NoTeacherFoundError();
       break;
     case "student":
       let student;
@@ -32,7 +36,7 @@ export const validateInDB = async (req: express.Request) => {
       } catch (error) {
         throw new DBError();
       }
-      if (!student) throw new JWTValidationError();
+      if (!student) throw new NoStudentFoundError();
       break;
   }
 };

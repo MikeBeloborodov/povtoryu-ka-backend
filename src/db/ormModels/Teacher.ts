@@ -45,5 +45,10 @@ export const Teacher = seq.define(
         attributes: { include: ["password"] },
       },
     },
+    hooks: {
+      afterCreate: (teacher, opts) => {
+        delete teacher.dataValues.password;
+      },
+    },
   },
 );

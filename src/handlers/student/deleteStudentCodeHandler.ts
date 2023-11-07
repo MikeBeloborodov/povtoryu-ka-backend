@@ -7,6 +7,7 @@ import { validateBody } from "../../bin/validateBody";
 import { validateJWT } from "../../bin/validateJWT";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateInDB } from "../../db/bin/validateInDB";
+import { validateRole } from "../../bin/validateRole";
 
 export const deleteStudentCodeHandler = async (
   req: express.Request,
@@ -21,6 +22,8 @@ export const deleteStudentCodeHandler = async (
       validateHeaders: validateTokenHeader,
       validateJWT: validateJWT,
       validateInDB: validateInDB,
+      validateRole: validateRole,
+      requiredRole: "teacher",
       role: "teacher",
     });
 

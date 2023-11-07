@@ -8,7 +8,6 @@ import { validateInDB } from "../../db/bin/validateInDB";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateBody } from "../../bin/validateBody";
 import { StudentDeleteClass } from "../../classes/Student";
-import { checkJWTBlackList } from "../../bin/checkJWTBlackList";
 
 export const deleteStudentHandler = async (
   req: express.Request,
@@ -22,7 +21,6 @@ export const deleteStudentHandler = async (
       validateBody: validateBody,
       bodyClass: StudentDeleteClass,
       validateJWT: validateJWT,
-      checkJWTBlackList: checkJWTBlackList,
       validateInDB: validateInDB,
       validateRole: validateRole,
       requiredRole: "teacher",

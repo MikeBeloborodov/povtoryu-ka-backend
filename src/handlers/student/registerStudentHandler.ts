@@ -23,9 +23,9 @@ export const registerStudentHandler = async (
     });
 
     // save new student
-    await saveStudent(req);
+    const student = await saveStudent(req);
 
-    return res.status(201).send({ message: "Student registered." });
+    return res.status(201).send(student);
 
     // error handling
   } catch (error) {

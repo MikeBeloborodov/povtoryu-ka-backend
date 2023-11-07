@@ -7,7 +7,7 @@ import { validateJWT } from "../../bin/validateJWT";
 import { saveNewStudentCode } from "../../db/bin/saveNewStudentCode";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateInDB } from "../../db/bin/validateInDB";
-import { checkJWTBlackList } from "../../bin/checkJWTBlackList";
+import { validateRole } from "../../bin/validateRole";
 
 export const registerNewStudentCodeHandler = async (
   req: express.Request,
@@ -21,9 +21,9 @@ export const registerNewStudentCodeHandler = async (
       validateBody: validateBody,
       validateHeaders: validateTokenHeader,
       validateJWT: validateJWT,
-      checkJWTBlackList: checkJWTBlackList,
       validateInDB: validateInDB,
-      role: "teacher",
+      validateRole: validateRole,
+      requiredRole: "teacher",
     });
 
     // save student code

@@ -26,10 +26,6 @@ export const Student = seq.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    specialCode: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -65,6 +61,12 @@ export const Student = seq.define(
         attributes: {
           include: ["password"],
         },
+      },
+    },
+    hooks: {
+      afterCreate: (student, opts) => {
+        delete student.dataValues.password;
+        delete student.dataValues.specialCode;
       },
     },
   },

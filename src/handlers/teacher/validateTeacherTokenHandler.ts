@@ -4,7 +4,7 @@ import { validateTokenHeader } from "../../bin/validateTokenHeader";
 import { validateJWT } from "../../bin/validateJWT";
 import { validateInDB } from "../../db/bin/validateInDB";
 import { handleErrors } from "../../bin/handleErrors";
-import { checkJWTBlackList } from "../../bin/checkJWTBlackList";
+import { validateRole } from "../../bin/validateRole";
 
 require("dotenv").config();
 
@@ -19,8 +19,8 @@ export const validateTeacherTokenHandler = async (
       validateHeaders: validateTokenHeader,
       validateJWT: validateJWT,
       validateInDB: validateInDB,
-      checkJWTBlackList: checkJWTBlackList,
-      role: "teacher",
+      validateRole: validateRole,
+      requiredRole: "teacher",
     });
 
     return res.status(200).send({ message: "Token is valid" });

@@ -6,7 +6,6 @@ import { validateJWT } from "../../bin/validateJWT";
 import { validateInDB } from "../../db/bin/validateInDB";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateRole } from "../../bin/validateRole";
-import { checkJWTBlackList } from "../../bin/checkJWTBlackList";
 
 export const deleteTeacherHandler = async (
   req: express.Request,
@@ -21,8 +20,6 @@ export const deleteTeacherHandler = async (
       validateInDB: validateInDB,
       validateRole: validateRole,
       requiredRole: "teacher",
-      checkJWTBlackList: checkJWTBlackList,
-      role: "teacher",
     });
 
     // delete teacher
