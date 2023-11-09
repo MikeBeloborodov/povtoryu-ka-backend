@@ -11,13 +11,20 @@ import { Translation } from "../../ormModels/Translation";
 import { Image } from "../../ormModels/Image";
 import { Teacher } from "../../ormModels/Teacher";
 import { Student } from "../../ormModels/Student";
+import { returnDecodedJWT } from "../../../bin/utils";
+import { JWToken } from "../../../interfaces/Token";
 
 export const saveWordCard = async (req: express.Request) => {
+  const token = returnDecodedJWT(req) as JWToken;
   const requestBody = req.body as NewWordCardRequestBody;
-  if (!(await Teacher.findOne({ where: { id: requestBody.teacherId } })))
-    throw new NoTeacherFoundError();
-  if (!(await Student.findOne({ where: { id: requestBody.studentId } })))
-    throw new NoStudentFoundError();
+  const teacher: any = await Teacher.findOne({
+    where: { id: token.id },
+  });
+  const student: any = await Student.findOne({
+    where: { id: requestBody.studentId },
+  });
+  if (!teacher) throw new NoTeacherFoundError();
+  if (!student) throw new NoStudentFoundError();
   try {
     let partOfSpeechRu;
     switch (requestBody.partOfSpeech) {
@@ -40,7 +47,7 @@ export const saveWordCard = async (req: express.Request) => {
       partOfSpeechRu: partOfSpeechRu,
       definition: requestBody.definition,
       newCard: true,
-      teacherId: requestBody.teacherId,
+      teacherId: token.id,
       studentId: requestBody.studentId,
     });
     const cardRes: any = await card.save();
@@ -68,6 +75,9 @@ export const saveWordCard = async (req: express.Request) => {
       });
       await image.save();
     }
+    student.newCards += 1;
+    student.allCards += 1;
+    await student.save();
     return cardRes;
   } catch (error) {
     throw new DBError();

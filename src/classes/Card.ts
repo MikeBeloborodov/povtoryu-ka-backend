@@ -21,9 +21,6 @@ export class NewWordCardClass {
   images: string[];
 
   @IsNotEmpty()
-  teacherId: number;
-
-  @IsNotEmpty()
   studentId: number;
 
   constructor({
@@ -33,12 +30,10 @@ export class NewWordCardClass {
     translations,
     definition,
     word,
-    teacherId,
     studentId,
   }: NewWordCardRequestBody) {
     this.partOfSpeech = partOfSpeech;
     this.word = word;
-    this.teacherId = teacherId;
     this.studentId = studentId;
     this.sentences = sentences;
     this.images = images;

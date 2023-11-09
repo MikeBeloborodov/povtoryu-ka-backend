@@ -26,6 +26,18 @@ export const Student = seq.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    newCards: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    reviewCards: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    allCards: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,

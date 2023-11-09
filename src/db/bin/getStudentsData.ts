@@ -14,6 +14,7 @@ export const getStudentsData = async (req: express.Request) => {
     });
     const users = await Student.scope("teacherScope").findAll({
       where: { teacherId: teacher.id },
+      order: [["id", "ASC"]],
     });
     return users;
   } catch (error) {
