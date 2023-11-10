@@ -8,5 +8,6 @@ export const validateRole = async (
   requiredRole: string,
 ) => {
   const token = returnDecodedJWT(req) as JWToken;
-  if (requiredRole !== token.role) throw new RoleRequirementError();
+  if (requiredRole === "teacher" && requiredRole !== token.role)
+    throw new RoleRequirementError();
 };

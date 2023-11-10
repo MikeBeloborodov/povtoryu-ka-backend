@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import express from "express";
-import { Student as StudentModel } from "../ormModels/Student";
-import { StudentCode } from "../ormModels/StudentCode";
-import { DBError } from "../../classes/Errors";
+import { Student as StudentModel } from "../../ormModels/Student";
+import { StudentCode } from "../../ormModels/StudentCode";
+import { DBError } from "../../../classes/Errors";
 
 export const saveStudent = async (req: express.Request) => {
   const saltRounds = 10;

@@ -1,6 +1,6 @@
 import express from "express";
 import { validateTokenHeader } from "../../bin/validateTokenHeader";
-import { deleteStudent } from "../../db/bin/deleteStudent";
+import { deleteStudent } from "../../db/bin/students/deleteStudent";
 import { validateRole } from "../../bin/validateRole";
 import { validateRequest } from "../../bin/validateRequest";
 import { validateJWT } from "../../bin/validateJWT";

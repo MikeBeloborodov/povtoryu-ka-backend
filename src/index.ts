@@ -16,6 +16,7 @@ import { deleteTeacherHandler } from "./handlers/teacher/deleteTeacherHandler";
 import { deleteStudentCodeHandler } from "./handlers/student/deleteStudentCodeHandler";
 import { deleteStudentHandler } from "./handlers/student/deleteStudentHandler";
 import { createWordCardHandler } from "./handlers/cards/createWordCardHandler";
+import { returnStudentOwnData } from "./handlers/student/returnStudentOwnData";
 
 require("dotenv").config();
 
@@ -55,6 +56,8 @@ app.delete("/api/v1/student/code/delete", deleteStudentCodeHandler);
 app.get("/api/v1/student/token", validateStudentTokenHandler);
 
 app.get("/api/v1/students", returnStudentsDataHandler);
+
+app.get("/api/v1/student/own", returnStudentOwnData);
 
 // cards
 app.post("/api/v1/cards/word/new", createWordCardHandler);

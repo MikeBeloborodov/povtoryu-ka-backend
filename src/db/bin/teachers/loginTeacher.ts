@@ -2,9 +2,9 @@ import {
   DBError,
   NoTeacherFoundError,
   WrongPasswordError,
-} from "../../classes/Errors";
-import { Teacher } from "../ormModels/Teacher";
-import { createJWToken } from "./createJWToken";
+} from "../../../classes/Errors";
+import { Teacher } from "../../ormModels/Teacher";
+import { createJWToken } from "../createJWToken";
 import bcrypt from "bcrypt";
 import express from "express";
 

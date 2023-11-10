@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteStudentCode } from "../../db/bin/deleteStudentCode";
+import { deleteStudentCode } from "../../db/bin/codes/deleteStudentCode";
 import { validateTokenHeader } from "../../bin/validateTokenHeader";
 import { validateRequest } from "../../bin/validateRequest";
 import { DeleteStudentCodeClass } from "../../classes/Student";

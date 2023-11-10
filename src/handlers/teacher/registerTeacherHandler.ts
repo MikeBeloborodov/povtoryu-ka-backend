@@ -1,6 +1,6 @@
 import express from "express";
-import { saveTeacher } from "../../db/bin/saveTeacher";
-import { validateSpecialCode } from "../../db/bin/validateSpecialCode";
+import { saveTeacher } from "../../db/bin/teachers/saveTeacher";
+import { validateSpecialCode } from "../../db/bin/codes/validateSpecialCode";
 import { validateRequest } from "../../bin/validateRequest";
 import { validateBody } from "../../bin/validateBody";
 import { TeacherRegistrationClass } from "../../classes/Teacher";

@@ -4,7 +4,7 @@ import { validateRequest } from "../../bin/validateRequest";
 import { NewStudentCodeRegistrationClass } from "../../classes/Student";
 import { validateBody } from "../../bin/validateBody";
 import { validateJWT } from "../../bin/validateJWT";
-import { saveNewStudentCode } from "../../db/bin/saveNewStudentCode";
+import { saveNewStudentCode } from "../../db/bin/codes/saveNewStudentCode";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateInDB } from "../../db/bin/validateInDB";
 import { validateRole } from "../../bin/validateRole";

@@ -1,8 +1,8 @@
 import express from "express";
-import { StudentCode } from "../ormModels/StudentCode";
-import { returnDecodedJWT } from "../../bin/utils";
-import { JWToken } from "../../interfaces/Token";
-import { DBError, NoStudentCodeError } from "../../classes/Errors";
+import { StudentCode } from "../../ormModels/StudentCode";
+import { returnDecodedJWT } from "../../../bin/utils";
+import { JWToken } from "../../../interfaces/Token";
+import { DBError, NoStudentCodeError } from "../../../classes/Errors";
 
 export const deleteStudentCode = async (req: express.Request) => {
   const token = returnDecodedJWT(req) as JWToken;

@@ -1,7 +1,7 @@
 import express from "express";
-import { StudentCode } from "../ormModels/StudentCode";
-import { TeacherCode } from "../ormModels/TeacherCode";
-import { DBError, SpecialCodeValidationError } from "../../classes/Errors";
+import { StudentCode } from "../../ormModels/StudentCode";
+import { TeacherCode } from "../../ormModels/TeacherCode";
+import { DBError, SpecialCodeValidationError } from "../../../classes/Errors";
 
 export const validateSpecialCode = async (
   req: express.Request,

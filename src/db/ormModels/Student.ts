@@ -66,7 +66,18 @@ export const Student = seq.define(
     scopes: {
       teacherScope: {
         attributes: {
-          exclude: ["password", "token"],
+          exclude: ["password"],
+        },
+      },
+      studentOwnScope: {
+        attributes: {
+          exclude: [
+            "password",
+            "nickname",
+            "createdAt",
+            "updatedAt",
+            "teacherId",
+          ],
         },
       },
       withPassword: {

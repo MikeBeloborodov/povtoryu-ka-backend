@@ -1,5 +1,5 @@
 import express from "express";
-import { loginTeacher } from "../../db/bin/loginTeacher";
+import { loginTeacher } from "../../db/bin/teachers/loginTeacher";
 import { validateRequest } from "../../bin/validateRequest";
 import { validateBody } from "../../bin/validateBody";
 import { TeacherLoginClass } from "../../classes/Teacher";

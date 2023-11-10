@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
 import express from "express";
-import { Student } from "../ormModels/Student";
-import { createJWToken } from "./createJWToken";
+import { Student } from "../../ormModels/Student";
+import { createJWToken } from "../createJWToken";
 import {
   DBError,
   WrongPasswordError,
   NoStudentFoundError,
-} from "../../classes/Errors";
+} from "../../../classes/Errors";
 
 export const loginStudent = async (req: express.Request) => {
   let student: any;

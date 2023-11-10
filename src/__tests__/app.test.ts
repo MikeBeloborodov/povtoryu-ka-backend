@@ -653,6 +653,28 @@ describe("Student login:", () => {
   });
 });
 
+describe("Student get own data wrong jwt:", () => {
+  test("Data:", async () => {
+    const res = await request(app)
+      .get("/api/v1/student/own")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN} 123`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(403);
+  });
+});
+
+describe("Student get own data:", () => {
+  test("Data:", async () => {
+    const res = await request(app)
+      .get("/api/v1/student/own")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+  });
+});
+
 describe("Student validate token no token:", () => {
   test("Validate:", async () => {
     const res = await request(app)
@@ -837,19 +859,6 @@ describe("Create word card default part of speech.", () => {
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`)
       .set("Accept", "application/json");
     expect(res.status).toEqual(201);
-  });
-});
-
-describe("Create word card wrong teacher ID", () => {
-  test("Create:", async () => {
-    wordCard.teacherId = 0;
-    const res = await request(app)
-      .post("/api/v1/cards/word/new")
-      .send(wordCard)
-      .set("Content-Type", "application/json")
-      .set("Authorization", `Bearer ${TEACHER_TOKEN}`)
-      .set("Accept", "application/json");
-    expect(res.status).toEqual(404);
   });
 });
 

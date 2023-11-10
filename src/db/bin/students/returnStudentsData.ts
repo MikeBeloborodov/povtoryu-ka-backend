@@ -1,11 +1,11 @@
-import { Teacher } from "../ormModels/Teacher";
-import { Student } from "../ormModels/Student";
+import { Teacher } from "../../ormModels/Teacher";
+import { Student } from "../../ormModels/Student";
 import express from "express";
-import { returnDecodedJWT } from "../../bin/utils";
-import { JWToken } from "../../interfaces/Token";
-import { DBError } from "../../classes/Errors";
+import { returnDecodedJWT } from "../../../bin/utils";
+import { JWToken } from "../../../interfaces/Token";
+import { DBError } from "../../../classes/Errors";
 
-export const getStudentsData = async (req: express.Request) => {
+export const returnStudentsData = async (req: express.Request) => {
   const token = returnDecodedJWT(req) as JWToken;
   let teacher: any;
   try {
