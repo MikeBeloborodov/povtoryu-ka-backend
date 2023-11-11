@@ -25,7 +25,7 @@ export const Translation = seq.define("Translation", {
     allowNull: false,
     references: {
       model: {
-        tableName: "Cards",
+        tableName: "WordCards",
       },
       key: "id",
     },

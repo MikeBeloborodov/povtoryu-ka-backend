@@ -25,7 +25,7 @@ export const Image = seq.define("Image", {
     allowNull: false,
     references: {
       model: {
-        tableName: "Cards",
+        tableName: "WordCards",
       },
       key: "id",
     },

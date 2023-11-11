@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize as seq } from "../db";
 
 export const Sentence = seq.define("Sentence", {
@@ -25,7 +25,7 @@ export const Sentence = seq.define("Sentence", {
     allowNull: false,
     references: {
       model: {
-        tableName: "Cards",
+        tableName: "WordCards",
       },
       key: "id",
     },

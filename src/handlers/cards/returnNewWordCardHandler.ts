@@ -5,8 +5,9 @@ import { validateJWT } from "../../bin/validateJWT";
 import { validateInDB } from "../../db/bin/validateInDB";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateRole } from "../../bin/validateRole";
+import { returnNewWordCard } from "../../db/bin/cards/returnNewWordCard";
 
-export const validateStudentTokenHandler = async (
+export const returnNewWordCardHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
@@ -21,7 +22,9 @@ export const validateStudentTokenHandler = async (
       requiredRole: "student",
     });
 
-    return res.status(200).send({ message: "Token is valid" });
+    const card = await returnNewWordCard(req);
+
+    return res.status(200).send(card);
 
     // error handling
   } catch (error) {

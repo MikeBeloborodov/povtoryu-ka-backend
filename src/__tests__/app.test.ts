@@ -875,6 +875,17 @@ describe("Create word card wrong student ID", () => {
   });
 });
 
+describe("Return new card", () => {
+  test("Return:", async () => {
+    const res = await request(app)
+      .get("/api/v1/cards/word/study/new")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+  });
+});
+
 // deletes
 describe("Delete student code wrong JWT", () => {
   test("Delete", async () => {
