@@ -18,6 +18,7 @@ import { deleteStudentHandler } from "./handlers/student/deleteStudentHandler";
 import { createWordCardHandler } from "./handlers/cards/createWordCardHandler";
 import { returnStudentOwnData } from "./handlers/student/returnStudentOwnData";
 import { returnNewWordCardHandler } from "./handlers/cards/returnNewWordCardHandler";
+import { answerWordHandler } from "./handlers/cards/answerWordHandler";
 
 require("dotenv").config();
 
@@ -64,6 +65,8 @@ app.get("/api/v1/student/own", returnStudentOwnData);
 app.post("/api/v1/cards/word/new", createWordCardHandler);
 
 app.get("/api/v1/cards/word/study/new", returnNewWordCardHandler);
+
+app.post("/api/v1/cards/word/study/answer", answerWordHandler);
 
 export const server = app.listen(port, () => {
   console.log("Server is running on http://localhost:8080");

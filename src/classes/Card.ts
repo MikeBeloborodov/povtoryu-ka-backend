@@ -1,5 +1,8 @@
 import { IsNotEmpty } from "class-validator";
-import { NewWordCardRequestBody } from "../interfaces/Card";
+import {
+  AnswerWordCardRequestBody,
+  NewWordCardRequestBody,
+} from "../interfaces/Card";
 
 export class NewWordCardClass {
   @IsNotEmpty()
@@ -39,5 +42,18 @@ export class NewWordCardClass {
     this.images = images;
     this.translations = translations;
     this.definition = definition;
+  }
+}
+
+export class AnswerWordCardClass {
+  @IsNotEmpty()
+  cardId: number;
+
+  @IsNotEmpty()
+  answer: string;
+
+  constructor({ cardId, answer }: AnswerWordCardRequestBody) {
+    this.cardId = cardId;
+    this.answer = answer;
   }
 }

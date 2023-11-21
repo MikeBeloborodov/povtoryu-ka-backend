@@ -16,3 +16,8 @@ export interface NewWordCardRequestBody {
   translations: string[];
   studentId: number;
 }
+
+export interface AnswerWordCardRequestBody {
+  cardId: number;
+  answer: string;
+}
