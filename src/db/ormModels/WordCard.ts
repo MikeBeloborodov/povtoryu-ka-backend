@@ -34,6 +34,14 @@ export const WordCard = seq.define("WordCard", {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  nextReview: {
+    type: DataTypes.DATE,
+  },
+  streak: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: -1,
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,

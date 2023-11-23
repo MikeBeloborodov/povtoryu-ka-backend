@@ -24,3 +24,9 @@ export const returnDecodedJWT = (req: express.Request) => {
   const decoded = jwt.verify(token, process.env.SECRET_TOKEN_KEY);
   return decoded;
 };
+
+export const addDays = (date: Date, days: number) => {
+  let result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};

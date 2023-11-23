@@ -4,10 +4,9 @@ import { validateRequest } from "../../bin/validateRequest";
 import { validateJWT } from "../../bin/validateJWT";
 import { validateInDB } from "../../db/bin/validateInDB";
 import { handleErrors } from "../../bin/handleErrors";
-import { validateRole } from "../../bin/validateRole";
-import { sleep } from "../../bin/utils";
+import { returnCardsCount } from "../../db/bin/students/returnCardsCount";
 
-export const validateStudentTokenHandler = async (
+export const returnCardsCountHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
@@ -18,12 +17,12 @@ export const validateStudentTokenHandler = async (
       validateHeaders: validateTokenHeader,
       validateJWT: validateJWT,
       validateInDB: validateInDB,
-      validateRole: validateRole,
-      requiredRole: "student",
     });
 
-    await sleep(200);
-    return res.status(200).send({ message: "Token is valid" });
+    // get students data from db
+    const cardsCount = await returnCardsCount(req);
+
+    return res.status(200).send(cardsCount);
 
     // error handling
   } catch (error) {

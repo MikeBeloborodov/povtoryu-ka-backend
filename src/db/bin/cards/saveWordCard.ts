@@ -75,9 +75,6 @@ export const saveWordCard = async (req: express.Request) => {
       });
       await image.save();
     }
-    student.newCards += 1;
-    student.allCards += 1;
-    await student.save();
     return cardRes;
   } catch (error) {
     throw new DBError();

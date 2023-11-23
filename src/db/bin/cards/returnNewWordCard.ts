@@ -12,9 +12,10 @@ export const returnNewWordCard = async (req: express.Request) => {
   let card: any;
   try {
     card = await WordCard.findOne({
-      where: { studentId: token.id },
+      where: { studentId: token.id, newCard: true },
+      order: [["updatedAt", "ASC"]],
       attributes: {
-        exclude: ["createdAt", "updatedAt", "teacherId", "studentId"],
+        exclude: ["teacherId", "studentId"],
       },
       include: [
         {
@@ -35,6 +36,7 @@ export const returnNewWordCard = async (req: express.Request) => {
       ],
     });
   } catch (error) {
+    console.log(error);
     throw new DBError();
   }
   return card;

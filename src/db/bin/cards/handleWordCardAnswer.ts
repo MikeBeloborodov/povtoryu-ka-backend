@@ -3,7 +3,7 @@ import { WordCard } from "../../ormModels/WordCard";
 import { Image } from "../../ormModels/Image";
 import { Sentence } from "../../ormModels/Sentence";
 import { Translation } from "../../ormModels/Translation";
-import { returnDecodedJWT } from "../../../bin/utils";
+import { addDays, returnDecodedJWT } from "../../../bin/utils";
 import { JWToken } from "../../../interfaces/Token";
 import { DBError } from "../../../classes/Errors";
 
@@ -34,10 +34,25 @@ export const handleWordCardAnswer = async (req: express.Request) => {
         },
       ],
     });
-    return card.translations.some(
+    const isCorrect = card.translations.some(
       (item: any) =>
         item.translation.toLowerCase() === req.body.answer.toLowerCase(),
     );
+    const currDate = new Date();
+    if (isCorrect) {
+      if (card.newCard) {
+        card.newCard = false;
+        card.nextReview = addDays(currDate, 0);
+      } else {
+        card.streak += 1;
+        card.nextReview = addDays(currDate, Math.pow(2, card.streak));
+      }
+    } else {
+      card.streak = -1;
+      card.nextReview = addDays(currDate, 0);
+    }
+    await card.save();
+    return isCorrect;
   } catch (error) {
     throw new DBError();
   }

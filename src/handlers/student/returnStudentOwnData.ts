@@ -22,7 +22,7 @@ export const returnStudentOwnData = async (
     // get students data from db
     const student = await returnStudentData(req, true);
 
-    return res.status(200).send({ studentData: student });
+    return res.status(200).send(student);
 
     // error handling
   } catch (error) {
