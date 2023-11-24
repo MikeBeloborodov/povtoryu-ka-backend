@@ -20,6 +20,7 @@ import { returnStudentOwnData } from "./handlers/student/returnStudentOwnData";
 import { returnNewWordCardHandler } from "./handlers/cards/returnNewWordCardHandler";
 import { answerWordHandler } from "./handlers/cards/answerWordHandler";
 import { returnCardsCountHandler } from "./handlers/student/returnCardsCountHandler";
+import { returnReviewWordCardHandler } from "./handlers/cards/returnReviewWordCardHandler";
 
 require("dotenv").config();
 
@@ -68,6 +69,8 @@ app.get("/api/v1/student/cardsCount", returnCardsCountHandler);
 app.post("/api/v1/cards/word/new", createWordCardHandler);
 
 app.get("/api/v1/cards/word/study/new", returnNewWordCardHandler);
+
+app.get("/api/v1/cards/word/study/review", returnReviewWordCardHandler);
 
 app.post("/api/v1/cards/word/study/answer", answerWordHandler);
 

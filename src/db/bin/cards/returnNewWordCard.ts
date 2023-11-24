@@ -36,7 +36,6 @@ export const returnNewWordCard = async (req: express.Request) => {
       ],
     });
   } catch (error) {
-    console.log(error);
     throw new DBError();
   }
   return card;

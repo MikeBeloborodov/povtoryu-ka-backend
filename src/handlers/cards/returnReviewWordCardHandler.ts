@@ -1,14 +1,13 @@
-import { returnStudentsData } from "../../db/bin/students/returnStudentsData";
-import { validateTokenHeader } from "../../bin/validateTokenHeader";
 import express from "express";
+import { validateTokenHeader } from "../../bin/validateTokenHeader";
 import { validateRequest } from "../../bin/validateRequest";
 import { validateJWT } from "../../bin/validateJWT";
 import { validateInDB } from "../../db/bin/validateInDB";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateRole } from "../../bin/validateRole";
-import { sleep } from "../../bin/utils";
+import { returnReviewWordCard } from "../../db/bin/cards/returnReviewWordCard";
 
-export const returnStudentsDataHandler = async (
+export const returnReviewWordCardHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
@@ -20,16 +19,12 @@ export const returnStudentsDataHandler = async (
       validateJWT: validateJWT,
       validateInDB: validateInDB,
       validateRole: validateRole,
-      requiredRole: "teacher",
-      role: "teacher",
+      requiredRole: "student",
     });
 
-    // get students data from db
-    const studentsData = await returnStudentsData(req);
+    const card = await returnReviewWordCard(req);
 
-    await sleep(500);
-
-    return res.status(200).send(studentsData);
+    return card ? res.status(200).send(card) : res.status(204).send({});
 
     // error handling
   } catch (error) {

@@ -1,4 +1,5 @@
 import express from "express";
+import { Op } from "sequelize";
 import { WordCard } from "../../ormModels/WordCard";
 import { Image } from "../../ormModels/Image";
 import { Sentence } from "../../ormModels/Sentence";
@@ -6,17 +7,22 @@ import { Translation } from "../../ormModels/Translation";
 import { returnDecodedJWT } from "../../../bin/utils";
 import { JWToken } from "../../../interfaces/Token";
 import { DBError } from "../../../classes/Errors";
-import { calculateNextReview } from "../utils";
-import { saveStats } from "../stats/saveStats";
 
-export const handleWordCardAnswer = async (req: express.Request) => {
+export const returnReviewWordCard = async (req: express.Request) => {
   const token = returnDecodedJWT(req) as JWToken;
   let card: any;
   try {
     card = await WordCard.findOne({
-      where: { studentId: token.id, id: req.body.cardId },
+      where: {
+        studentId: token.id,
+        newCard: false,
+        nextReview: {
+          [Op.lt]: new Date(),
+        },
+      },
+      order: [["updatedAt", "ASC"]],
       attributes: {
-        exclude: ["createdAt", "updatedAt", "teacherId"],
+        exclude: ["teacherId", "studentId"],
       },
       include: [
         {
@@ -36,23 +42,8 @@ export const handleWordCardAnswer = async (req: express.Request) => {
         },
       ],
     });
-    const isCorrect = card.translations.some(
-      (item: any) =>
-        item.translation.toLowerCase() === req.body.answer.toLowerCase(),
-    );
-
-    card = calculateNextReview(isCorrect, card);
-    await saveStats(
-      card.id,
-      card.studentId,
-      card.word,
-      req.body.answer.toLowerCase(),
-      isCorrect,
-    );
-    await card.save();
-
-    return isCorrect;
   } catch (error) {
     throw new DBError();
   }
+  return card;
 };

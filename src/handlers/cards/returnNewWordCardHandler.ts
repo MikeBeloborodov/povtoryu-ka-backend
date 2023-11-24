@@ -24,7 +24,7 @@ export const returnNewWordCardHandler = async (
 
     const card = await returnNewWordCard(req);
 
-    return res.status(200).send(card);
+    return card ? res.status(200).send(card) : res.status(204).send({});
 
     // error handling
   } catch (error) {

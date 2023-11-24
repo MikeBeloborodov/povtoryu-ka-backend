@@ -73,8 +73,8 @@ export const WordCard = seq.define("WordCard", {
 });
 
 WordCard.hasMany(Sentence, { foreignKey: "cardId", as: "sentences" });
-Sentence.belongsTo(WordCard);
+Sentence.belongsTo(WordCard, { foreignKey: "cardId" });
 WordCard.hasMany(Image, { foreignKey: "cardId", as: "images" });
-Image.belongsTo(WordCard);
+Image.belongsTo(WordCard, { foreignKey: "cardId" });
 WordCard.hasMany(Translation, { foreignKey: "cardId", as: "translations" });
-Translation.belongsTo(WordCard);
+Translation.belongsTo(WordCard, { foreignKey: "cardId" });

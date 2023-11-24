@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize as seq } from "../db";
 
 export const Translation = seq.define("Translation", {
