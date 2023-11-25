@@ -23,7 +23,6 @@ export const saveStudent = async (req: express.Request) => {
     await studentCode.destroy();
     return studentRes;
   } catch (error) {
-    console.log(error);
     throw new DBError();
   }
 };

@@ -2,14 +2,9 @@ import express from "express";
 import { WordCard } from "../../ormModels/WordCard";
 import { NewWordCardRequestBody } from "../../../interfaces/Card";
 import { Sentence } from "../../ormModels/Sentence";
-import {
-  DBError,
-  NoStudentFoundError,
-  NoTeacherFoundError,
-} from "../../../classes/Errors";
+import { DBError, NoStudentFoundError } from "../../../classes/Errors";
 import { Translation } from "../../ormModels/Translation";
 import { Image } from "../../ormModels/Image";
-import { Teacher } from "../../ormModels/Teacher";
 import { Student } from "../../ormModels/Student";
 import { returnDecodedJWT } from "../../../bin/utils";
 import { JWToken } from "../../../interfaces/Token";
@@ -17,13 +12,9 @@ import { JWToken } from "../../../interfaces/Token";
 export const saveWordCard = async (req: express.Request) => {
   const token = returnDecodedJWT(req) as JWToken;
   const requestBody = req.body as NewWordCardRequestBody;
-  const teacher: any = await Teacher.findOne({
-    where: { id: token.id },
-  });
   const student: any = await Student.findOne({
     where: { id: requestBody.studentId },
   });
-  if (!teacher) throw new NoTeacherFoundError();
   if (!student) throw new NoStudentFoundError();
   try {
     let partOfSpeechRu;

@@ -42,7 +42,6 @@ export const returnStudentsData = async (req: express.Request) => {
     }
     return studentsData;
   } catch (error) {
-    console.log(error);
     throw new DBError();
   }
 };

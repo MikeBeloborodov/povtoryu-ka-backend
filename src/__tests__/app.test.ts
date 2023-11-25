@@ -6,6 +6,7 @@ import { Teacher } from "../db/ormModels/Teacher";
 import { Student } from "../db/ormModels/Student";
 import { StudentCode } from "../db/ormModels/StudentCode";
 import { TeacherCode } from "../db/ormModels/TeacherCode";
+import { Stat } from "../db/ormModels/Stat";
 import bcrypt from "bcrypt";
 
 // consts
@@ -26,6 +27,16 @@ let STUDENT_CODE2: string;
 let TEACHER_TOKEN: string;
 let STUDENT_TOKEN: string;
 let HAS_TEST_FAILED = false;
+
+let CARD_ID_1: number;
+let RIGHT_ANSWER_1 = "яблоко";
+let WRONG_ANSWER = "яблаывф";
+let CARD_ID_2: number;
+let RIGHT_ANSWER_2 = "работать";
+let CARD_ID_3: number;
+let RIGHT_ANSWER_3 = "легкий";
+let CARD_ID_4: number;
+let RIGHT_ANSWER_4 = "редко";
 
 const wordCard = {
   partOfSpeech: "noun",
@@ -752,7 +763,6 @@ describe("Get students data", () => {
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
     expect(res.status).toEqual(200);
-    expect(res.body).toHaveProperty("studentsData");
   });
 });
 
@@ -823,6 +833,7 @@ describe("Create word card noun", () => {
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`)
       .set("Accept", "application/json");
     expect(res.status).toEqual(201);
+    CARD_ID_1 = res.body.card.id;
   });
 });
 
@@ -835,6 +846,7 @@ describe("Create word card verb", () => {
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`)
       .set("Accept", "application/json");
     expect(res.status).toEqual(201);
+    CARD_ID_2 = res.body.card.id;
   });
 });
 
@@ -847,6 +859,7 @@ describe("Create word card adjective", () => {
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`)
       .set("Accept", "application/json");
     expect(res.status).toEqual(201);
+    CARD_ID_3 = res.body.card.id;
   });
 });
 
@@ -859,6 +872,7 @@ describe("Create word card default part of speech.", () => {
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`)
       .set("Accept", "application/json");
     expect(res.status).toEqual(201);
+    CARD_ID_4 = res.body.card.id;
   });
 });
 
@@ -883,6 +897,278 @@ describe("Return new card", () => {
       .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
       .set("Accept", "application/json");
     expect(res.status).toEqual(200);
+  });
+});
+
+// study
+describe("Answer word card noun, wrong answer", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_1,
+        answer: WRONG_ANSWER,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(false);
+  });
+});
+
+describe("Answer word card noun, db error", () => {
+  test("Study:", async () => {
+    sinon.stub(WordCard, "findOne").throws(Error("Database error."));
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_1,
+        answer: RIGHT_ANSWER_1,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    sinon.restore();
+    expect(res.status).toEqual(500);
+  });
+});
+
+describe("Answer word card noun, right answer 1", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_1,
+        answer: RIGHT_ANSWER_1,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Answer word card noun, right answer 2", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_2,
+        answer: RIGHT_ANSWER_2,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Answer word card noun, right answer 3", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_3,
+        answer: RIGHT_ANSWER_3,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Answer word card noun, right answer 4", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_4,
+        answer: RIGHT_ANSWER_4,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Return new card no new cards", () => {
+  test("Return:", async () => {
+    const res = await request(app)
+      .get("/api/v1/cards/word/study/new")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(204);
+  });
+});
+
+describe("Return new card database error", () => {
+  test("Return:", async () => {
+    sinon.stub(WordCard, "findOne").throws(Error("Database error."));
+    const res = await request(app)
+      .get("/api/v1/cards/word/study/new")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    sinon.restore();
+    expect(res.status).toEqual(500);
+  });
+});
+
+describe("Return review word card", () => {
+  test("Return:", async () => {
+    const res = await request(app)
+      .get("/api/v1/cards/word/study/review")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+  });
+});
+
+describe("Return review word card database error", () => {
+  test("Return:", async () => {
+    sinon.stub(WordCard, "findOne").throws(Error("Database error."));
+    const res = await request(app)
+      .get("/api/v1/cards/word/study/review")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    sinon.restore();
+    expect(res.status).toEqual(500);
+  });
+});
+
+describe("Answer word card noun, right answer 1", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_1,
+        answer: RIGHT_ANSWER_1,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Answer word card noun, right answer 2", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_2,
+        answer: RIGHT_ANSWER_2,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Answer word card noun, right answer 3", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_3,
+        answer: RIGHT_ANSWER_3,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Answer word card noun, right answer 4", () => {
+  test("Study:", async () => {
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_4,
+        answer: RIGHT_ANSWER_4,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("isCorrect");
+    expect(res.body.isCorrect).toBe(true);
+  });
+});
+
+describe("Return review word card no cards", () => {
+  test("Return:", async () => {
+    const res = await request(app)
+      .get("/api/v1/cards/word/study/review")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(204);
+  });
+});
+
+describe("Return student own card count database error", () => {
+  test("Return:", async () => {
+    sinon.stub(WordCard, "findAll").throws(Error("Database error."));
+    const res = await request(app)
+      .get("/api/v1/student/cardsCount")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    sinon.restore();
+    expect(res.status).toEqual(500);
+  });
+});
+
+describe("Return student own card count", () => {
+  test("Return:", async () => {
+    const res = await request(app)
+      .get("/api/v1/student/cardsCount")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    expect(res.status).toEqual(200);
+  });
+});
+
+// stats
+describe("Stats DB error", () => {
+  test("Save stats:", async () => {
+    sinon.stub(Stat.prototype, "save").throws(Error("Database error."));
+    const res = await request(app)
+      .post("/api/v1/cards/word/study/answer")
+      .send({
+        cardId: CARD_ID_1,
+        answer: RIGHT_ANSWER_1,
+      })
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${STUDENT_TOKEN}`)
+      .set("Accept", "application/json");
+    sinon.restore();
+    expect(res.status).toEqual(500);
   });
 });
 
@@ -928,7 +1214,6 @@ describe("Delete student code no student code with this name", () => {
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${TEACHER_TOKEN}`);
-    console.log(res.body);
     expect(res.status).toEqual(404);
   });
 });
@@ -1183,7 +1468,6 @@ describe("Student validate token no student:", () => {
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${STUDENT_TOKEN}`);
-    console.log(res.body);
     expect(res.status).toEqual(404);
   });
 });

@@ -2,7 +2,6 @@ import express from "express";
 import parser from "body-parser";
 import cors from "cors";
 import bodyParserErrorHandler from "express-body-parser-error-handler";
-import { getWordsHandler } from "./handlers/getWordsHandler";
 import { registerTeacherHandler } from "./handlers/teacher/registerTeacherHandler";
 import { sequelize } from "./db/db";
 import { loginTeacherHandler } from "./handlers/teacher/loginTeacherHandler";
@@ -33,9 +32,6 @@ const port = 8080;
 app.use(parser.json());
 app.use(cors());
 app.use(bodyParserErrorHandler());
-
-// get an array of words from user, process them and save to DB
-app.post("/api/v1/words", getWordsHandler);
 
 // teacher endpoints
 app.post("/api/v1/teacher/register", registerTeacherHandler);
