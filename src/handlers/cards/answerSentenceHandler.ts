@@ -1,13 +1,15 @@
-import { returnStudentsData } from "../../db/bin/students/returnStudentsData";
-import { validateTokenHeader } from "../../bin/validateTokenHeader";
 import express from "express";
+import { validateTokenHeader } from "../../bin/validateTokenHeader";
 import { validateRequest } from "../../bin/validateRequest";
 import { validateJWT } from "../../bin/validateJWT";
 import { validateInDB } from "../../db/bin/validateInDB";
 import { handleErrors } from "../../bin/handleErrors";
 import { validateRole } from "../../bin/validateRole";
+import { validateBody } from "../../bin/validateBody";
+import { AnswerSentenceCardClass } from "../../classes/Card";
+import { handleSentenceCardAnswer } from "../../db/bin/cards/handleSentenceCardAnswer";
 
-export const returnStudentsDataHandler = async (
+export const answerSentenceHandler = async (
   req: express.Request,
   res: express.Response,
 ) => {
@@ -19,14 +21,14 @@ export const returnStudentsDataHandler = async (
       validateJWT: validateJWT,
       validateInDB: validateInDB,
       validateRole: validateRole,
-      requiredRole: "teacher",
-      role: "teacher",
+      validateBody: validateBody,
+      bodyClass: AnswerSentenceCardClass,
+      requiredRole: "student",
     });
 
-    // get students data from db
-    const studentsData = await returnStudentsData(req);
+    const answer = await handleSentenceCardAnswer(req);
 
-    return res.status(200).send(studentsData);
+    return res.status(200).send({ isCorrect: answer });
 
     // error handling
   } catch (error) {

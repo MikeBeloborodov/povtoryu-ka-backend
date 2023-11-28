@@ -1,7 +1,6 @@
 import express from "express";
 import parser from "body-parser";
 import cors from "cors";
-import bodyParserErrorHandler from "express-body-parser-error-handler";
 import { registerTeacherHandler } from "./handlers/teacher/registerTeacherHandler";
 import { sequelize } from "./db/db";
 import { loginTeacherHandler } from "./handlers/teacher/loginTeacherHandler";
@@ -20,6 +19,11 @@ import { returnNewWordCardHandler } from "./handlers/cards/returnNewWordCardHand
 import { answerWordHandler } from "./handlers/cards/answerWordHandler";
 import { returnCardsCountHandler } from "./handlers/student/returnCardsCountHandler";
 import { returnReviewWordCardHandler } from "./handlers/cards/returnReviewWordCardHandler";
+import { createSentenceCardHandler } from "./handlers/cards/createSentenceCardHandler";
+import { returnNewSentenceCardHandler } from "./handlers/cards/returnNewSentenceCardHandler";
+import { answerSentenceHandler } from "./handlers/cards/answerSentenceHandler";
+import { returnCardAudioHandler } from "./handlers/cards/returnCardAudioHandler";
+import { returnReviewSentenceCardHandler } from "./handlers/cards/returnReviewSentenceCardHandler";
 
 require("dotenv").config();
 
@@ -29,46 +33,68 @@ sequelize.authenticate();
 const app = express();
 const port = 8080;
 
-app.use(parser.json());
+const jsonParser = parser.json();
+
 app.use(cors());
-app.use(bodyParserErrorHandler());
 
 // teacher endpoints
-app.post("/api/v1/teacher/register", registerTeacherHandler);
+app.post("/api/v1/teacher/register", jsonParser, registerTeacherHandler);
 
-app.post("/api/v1/teacher/login", loginTeacherHandler);
+app.post("/api/v1/teacher/login", jsonParser, loginTeacherHandler);
 
-app.get("/api/v1/teacher/token", validateTeacherTokenHandler);
+app.get("/api/v1/teacher/token", jsonParser, validateTeacherTokenHandler);
 
-app.delete("/api/v1/teacher/delete", deleteTeacherHandler);
+app.delete("/api/v1/teacher/delete", jsonParser, deleteTeacherHandler);
 
 // student enpoints
-app.post("/api/v1/student/register", registerStudentHandler);
+app.post("/api/v1/student/register", jsonParser, registerStudentHandler);
 
-app.post("/api/v1/student/login", loginStudentHandler);
+app.post("/api/v1/student/login", jsonParser, loginStudentHandler);
 
-app.delete("/api/v1/student/delete", deleteStudentHandler);
+app.delete("/api/v1/student/delete", jsonParser, deleteStudentHandler);
 
-app.post("/api/v1/student/code/new", registerNewStudentCodeHandler);
+app.post("/api/v1/student/code/new", jsonParser, registerNewStudentCodeHandler);
 
-app.delete("/api/v1/student/code/delete", deleteStudentCodeHandler);
+app.delete("/api/v1/student/code/delete", jsonParser, deleteStudentCodeHandler);
 
-app.get("/api/v1/student/token", validateStudentTokenHandler);
+app.get("/api/v1/student/token", jsonParser, validateStudentTokenHandler);
 
-app.get("/api/v1/students", returnStudentsDataHandler);
+app.get("/api/v1/students", jsonParser, returnStudentsDataHandler);
 
-app.get("/api/v1/student/own", returnStudentOwnData);
+app.get("/api/v1/student/own", jsonParser, returnStudentOwnData);
 
-app.get("/api/v1/student/cardsCount", returnCardsCountHandler);
+app.get("/api/v1/student/cardsCount", jsonParser, returnCardsCountHandler);
 
 // cards
-app.post("/api/v1/cards/word/new", createWordCardHandler);
+app.get("/api/v1/cards/audio", jsonParser, returnCardAudioHandler);
 
-app.get("/api/v1/cards/word/study/new", returnNewWordCardHandler);
+app.post("/api/v1/cards/word/new", jsonParser, createWordCardHandler);
 
-app.get("/api/v1/cards/word/study/review", returnReviewWordCardHandler);
+app.post("/api/v1/cards/sentence/new", createSentenceCardHandler);
 
-app.post("/api/v1/cards/word/study/answer", answerWordHandler);
+app.get("/api/v1/cards/word/study/new", jsonParser, returnNewWordCardHandler);
+
+app.get(
+  "/api/v1/cards/sentence/study/new",
+  jsonParser,
+  returnNewSentenceCardHandler,
+);
+
+app.get(
+  "/api/v1/cards/word/study/review",
+  jsonParser,
+  returnReviewWordCardHandler,
+);
+
+app.get("/api/v1/cards/sentence/study/review", returnReviewSentenceCardHandler);
+
+app.post("/api/v1/cards/word/study/answer", jsonParser, answerWordHandler);
+
+app.post(
+  "/api/v1/cards/sentence/study/answer",
+  jsonParser,
+  answerSentenceHandler,
+);
 
 export const server = app.listen(port, () => {
   console.log("Server is running on http://localhost:8080");

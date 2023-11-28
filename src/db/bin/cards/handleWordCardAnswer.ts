@@ -7,7 +7,7 @@ import { returnDecodedJWT } from "../../../bin/utils";
 import { JWToken } from "../../../interfaces/Token";
 import { DBError } from "../../../classes/Errors";
 import { calculateNextReview } from "../utils";
-import { saveStats } from "../stats/saveStats";
+import { saveWordStats } from "../stats/saveWordStats";
 
 export const handleWordCardAnswer = async (req: express.Request) => {
   const token = returnDecodedJWT(req) as JWToken;
@@ -42,7 +42,7 @@ export const handleWordCardAnswer = async (req: express.Request) => {
     );
 
     card = calculateNextReview(isCorrect, card);
-    await saveStats(
+    await saveWordStats(
       card.id,
       card.studentId,
       card.word,

@@ -4,20 +4,39 @@ import { WordCard } from "../../ormModels/WordCard";
 import { returnDecodedJWT } from "../../../bin/utils";
 import { JWToken } from "../../../interfaces/Token";
 import { DBError } from "../../../classes/Errors";
+import { SentenceCard } from "../../ormModels/SentenceCard";
 
 export const returnCardsCount = async (req: express.Request) => {
   const token = returnDecodedJWT(req) as JWToken;
-  let cardsAll: any;
-  let cardsNew: any;
-  let cardsToReview: any;
+  let wordCardsAll: any;
+  let wordCardsNew: any;
+  let wordCardsToReview: any;
+  let sentenceCardsAll: any;
+  let sentenceCardsNew: any;
+  let sentenceCardsToReview: any;
   try {
-    cardsAll = await WordCard.findAll({
+    wordCardsAll = await WordCard.findAll({
       where: { studentId: token.id },
     });
-    cardsNew = await WordCard.findAll({
+    wordCardsNew = await WordCard.findAll({
       where: { studentId: token.id, newCard: true },
     });
-    cardsToReview = await WordCard.findAll({
+    wordCardsToReview = await WordCard.findAll({
+      where: {
+        studentId: token.id,
+        newCard: false,
+        nextReview: {
+          [Op.lt]: new Date(),
+        },
+      },
+    });
+    sentenceCardsAll = await SentenceCard.findAll({
+      where: { studentId: token.id },
+    });
+    sentenceCardsNew = await SentenceCard.findAll({
+      where: { studentId: token.id, newCard: true },
+    });
+    sentenceCardsToReview = await SentenceCard.findAll({
       where: {
         studentId: token.id,
         newCard: false,
@@ -30,9 +49,9 @@ export const returnCardsCount = async (req: express.Request) => {
     throw new DBError();
   }
   const cardsCount = {
-    cardsAll: cardsAll.length,
-    cardsNew: cardsNew.length,
-    cardsToReview: cardsToReview.length,
+    cardsAll: wordCardsAll.length + sentenceCardsAll.length,
+    cardsNew: wordCardsNew.length + sentenceCardsNew.length,
+    cardsToReview: wordCardsToReview.length + sentenceCardsToReview.length,
   };
   return cardsCount;
 };

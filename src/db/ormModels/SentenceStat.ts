@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize as seq } from "../db";
 
-export const Stat = seq.define("Stat", {
+export const SentenceStat = seq.define("SentenceStat", {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER,
@@ -13,7 +13,7 @@ export const Stat = seq.define("Stat", {
     allowNull: false,
     references: {
       model: {
-        tableName: "WordCards",
+        tableName: "SentenceCards",
       },
       key: "id",
     },
@@ -35,6 +35,10 @@ export const Stat = seq.define("Stat", {
   answer: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  correctAnswer: {
+    allowNull: false,
+    type: DataTypes.STRING,
   },
   isCorrect: {
     type: DataTypes.BOOLEAN,

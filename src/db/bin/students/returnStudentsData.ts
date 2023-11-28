@@ -5,12 +5,16 @@ import { returnDecodedJWT } from "../../../bin/utils";
 import { JWToken } from "../../../interfaces/Token";
 import { DBError } from "../../../classes/Errors";
 import { WordCard } from "../../ormModels/WordCard";
+import { SentenceCard } from "../..//ormModels/SentenceCard";
 
 export const returnStudentsData = async (req: express.Request) => {
   const token = returnDecodedJWT(req) as JWToken;
-  let cardsAll: any;
-  let cardsNew: any;
-  let cardsToReview: any;
+  let wordCardsAll: any;
+  let wordCardsNew: any;
+  let wordCardsToReview: any;
+  let sentenceCardsAll: any;
+  let sentenceCardsNew: any;
+  let sentenceCardsToReview: any;
   let studentsData: any = [];
   try {
     const students: any = await Student.scope("teacherScope").findAll({
@@ -18,13 +22,28 @@ export const returnStudentsData = async (req: express.Request) => {
       order: [["id", "ASC"]],
     });
     for (let i = 0; i < students.length; i++) {
-      cardsAll = await WordCard.findAll({
+      wordCardsAll = await WordCard.findAll({
         where: { studentId: students[i].id },
       });
-      cardsNew = await WordCard.findAll({
+      wordCardsNew = await WordCard.findAll({
         where: { studentId: students[i].id, newCard: true },
       });
-      cardsToReview = await WordCard.findAll({
+      wordCardsToReview = await WordCard.findAll({
+        where: {
+          studentId: students[i].id,
+          newCard: false,
+          nextReview: {
+            [Op.lt]: new Date(),
+          },
+        },
+      });
+      sentenceCardsAll = await SentenceCard.findAll({
+        where: { studentId: students[i].id },
+      });
+      sentenceCardsNew = await SentenceCard.findAll({
+        where: { studentId: students[i].id, newCard: true },
+      });
+      sentenceCardsToReview = await SentenceCard.findAll({
         where: {
           studentId: students[i].id,
           newCard: false,
@@ -34,9 +53,9 @@ export const returnStudentsData = async (req: express.Request) => {
         },
       });
       const cardsCount = {
-        cardsAll: cardsAll.length,
-        cardsNew: cardsNew.length,
-        cardsToReview: cardsToReview.length,
+        cardsAll: wordCardsAll.length + sentenceCardsAll.length,
+        cardsNew: wordCardsNew.length + sentenceCardsNew.length,
+        cardsToReview: wordCardsToReview.length + sentenceCardsToReview.length,
       };
       studentsData.push({ student: students[i], cardsCount: cardsCount });
     }

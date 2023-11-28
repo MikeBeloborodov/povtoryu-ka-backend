@@ -1,6 +1,7 @@
 import { IsNotEmpty } from "class-validator";
 import {
   AnswerWordCardRequestBody,
+  AnswerSentenceCardRequestBody,
   NewWordCardRequestBody,
 } from "../interfaces/Card";
 
@@ -45,6 +46,32 @@ export class NewWordCardClass {
   }
 }
 
+export class NewSentenceCardClass {
+  @IsNotEmpty()
+  sentence: string;
+
+  @IsNotEmpty()
+  word: string;
+
+  @IsNotEmpty()
+  answer: string;
+
+  sentenceTranslation: string;
+
+  @IsNotEmpty()
+  definition: string;
+
+  audio: Blob;
+
+  @IsNotEmpty()
+  pos: string;
+
+  @IsNotEmpty()
+  studentId: number;
+
+  image: string;
+}
+
 export class AnswerWordCardClass {
   @IsNotEmpty()
   cardId: number;
@@ -53,6 +80,19 @@ export class AnswerWordCardClass {
   answer: string;
 
   constructor({ cardId, answer }: AnswerWordCardRequestBody) {
+    this.cardId = cardId;
+    this.answer = answer;
+  }
+}
+
+export class AnswerSentenceCardClass {
+  @IsNotEmpty()
+  cardId: number;
+
+  @IsNotEmpty()
+  answer: string;
+
+  constructor({ cardId, answer }: AnswerSentenceCardRequestBody) {
     this.cardId = cardId;
     this.answer = answer;
   }

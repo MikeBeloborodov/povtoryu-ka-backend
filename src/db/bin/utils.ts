@@ -1,4 +1,10 @@
+import { writeFile, readFile, existsSync, mkdirSync } from "fs";
+import { promisify } from "util";
 import { addDays } from "../../bin/utils";
+import { FileSavingError } from "../../classes/Errors";
+
+const writeFileAsync = promisify(writeFile);
+const readFileAsync = promisify(readFile);
 
 export const calculateNextReview = (isCorrect: Boolean, card: any) => {
   const currDate = new Date();
@@ -15,4 +21,15 @@ export const calculateNextReview = (isCorrect: Boolean, card: any) => {
     card.nextReview = addDays(currDate, 0);
   }
   return card;
+};
+
+export const saveAudioFile = async (file: any, path: string) => {
+  try {
+    if (!existsSync("./audio")) mkdirSync("./audio");
+    const localFile = await readFileAsync(file.path);
+    await writeFileAsync(path, localFile);
+  } catch (error) {
+    console.log(error);
+    throw new FileSavingError();
+  }
 };

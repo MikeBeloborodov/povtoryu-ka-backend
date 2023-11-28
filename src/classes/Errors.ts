@@ -93,3 +93,27 @@ export class NoStudentFoundError extends Error {
     this.name = "NoStudentFoundError";
   }
 }
+
+export class FileSavingError extends Error {
+  constructor() {
+    super();
+    this.message = "Error occured during file saving. Call admin.";
+    this.name = "FileSavingError";
+  }
+}
+
+export class FileTransferError extends Error {
+  constructor() {
+    super();
+    this.message = "Error occured while transered file.";
+    this.name = "FileTransferError";
+  }
+}
+
+export class FormHandleError extends Error {
+  constructor() {
+    super();
+    this.message = "Error occured while handling form data";
+    this.name = "FormHandleError";
+  }
+}

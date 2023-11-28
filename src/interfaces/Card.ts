@@ -17,7 +17,24 @@ export interface NewWordCardRequestBody {
   studentId: number;
 }
 
+export interface NewSentenceCardRequestBody {
+  sentence: string;
+  word: string;
+  answer: string;
+  sentenceTranslation: string;
+  definition: string;
+  audio: Blob;
+  pos: string;
+  image: string;
+  studentId: number;
+}
+
 export interface AnswerWordCardRequestBody {
+  cardId: number;
+  answer: string;
+}
+
+export interface AnswerSentenceCardRequestBody {
   cardId: number;
   answer: string;
 }

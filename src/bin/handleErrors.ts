@@ -17,6 +17,9 @@ export const handleErrors = (res: express.Response, error: Error) => {
     case "EntityAlreadyExistsInDB":
       return res.status(409).send({ errorMessage: error });
     case "DBError":
+    case "FileSavingError":
+    case "FormHandleError":
+    case "FileTransferError":
       return res.status(500).send({ errorMessage: error.message });
     default:
       return res.status(500).send({
